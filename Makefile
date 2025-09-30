@@ -1,4 +1,4 @@
-export UPLOAD_EMAIL ?= my@email.example
+export UPLOAD_EMAIL ?= synack@garyillyes.com
 LIBDIR := lib
 include $(LIBDIR)/main.mk
 
