@@ -4,16 +4,15 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
-<meta content="Your Name Here" name="author">
+<title>A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients</title>
+<meta content="Gary Illyes" name="author">
 <meta content="
-       TODO Abstract 
+       This document defines a standardized JSON format for automated HTTP client (e.g., web crawlers, AI bots) operators to disclose their IP address ranges publicly. A consistent, machine-readable format for IP range publication simplifies the task of identifying and verifying legitimate automated traffic, thereby decreasing maintenance load on website operators while reducing the risk of inadvertently blocking beneficial clients. This specification codifies and extends common existing practices to provide a simple yet extensible format that accommodates a variety of use cases. 
     " name="description">
 <meta content="xml2rfc 3.30.2" name="generator">
 <meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
 <meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="draft-illyes-aipref-jafar-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.30.2
     Python 3.12.11
@@ -29,7 +28,7 @@
     setuptools 80.9.0
     wcwidth 0.2.13
 -->
-<link href="draft-todo-yourname-protocol.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-illyes-aipref-jafar.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1045,11 +1044,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">JAFAR</td>
 <td class="right">September 2025</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
+<td class="left">Illyes</td>
 <td class="center">Expires 3 April 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1058,9 +1057,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">AI Preferences</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-illyes-aipref-jafar-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2025-09-30" class="published">30 September 2025</time>
@@ -1072,31 +1071,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">G. Illyes</div>
+<div class="org">Independent</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-</section>
-<section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-about-this-document">
-<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
-      </h2>
-<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">
-        Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
-<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines a standardized JSON format for automated HTTP client (e.g., web crawlers, AI bots) operators to disclose their IP address ranges publicly. A consistent, machine-readable format for IP range publication simplifies the task of identifying and verifying legitimate automated traffic, thereby decreasing maintenance load on website operators while reducing the risk of inadvertently blocking beneficial clients. This specification codifies and extends common existing practices to provide a simple yet extensible format that accommodates a variety of use cases.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1134,10 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
             publication of this document. Please review these documents
             carefully, as they describe your rights and restrictions with
-            respect to this document. Code Components extracted from this
-            document must include Revised BSD License text as described in
-            Section 4.e of the Trust Legal Provisions and are provided without
-            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+            respect to this document.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="toc">
@@ -1150,22 +1131,64 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-format" class="internal xref">Format</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-top-level-object-definition" class="internal xref">Top-Level Object Definition</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-the-prefixes-array" class="internal xref">The prefixes Array</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-the-prefix-object" class="internal xref">The Prefix Object</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-processing-and-consumption-" class="internal xref">Processing and Consumption Rules</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-fetching-and-caching" class="internal xref">Fetching and Caching</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-handling-format-versioning" class="internal xref">Handling Format Versioning</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-prefix-aggregation-and-spec" class="internal xref">Prefix Aggregation and Specificity</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-use-cases-and-examples" class="internal xref">Use Cases and Examples</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-example-1-basic-publication" class="internal xref">Example 1: Basic Publication</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-example-2-advanced-publicat" class="internal xref">Example 2: Advanced Publication with Multiple Services</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-example-3-aggregated-public" class="internal xref">Example 3: Aggregated Publication by a Third Party</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1176,40 +1199,268 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">This document specifies a data format using the JavaScript Object Notation (JSON). It is intended for the publication of IP address ranges associated with automated HTTP clients.
+The scope of this specification is limited to the syntax and semantics of the JSON file itself. It does not specify the transport mechanism for retrieving the file. It also does not prescribe specific policies for how consumers should use the data (e.g., allowlisting, rate-limiting, or monitoring).
+This format is intended to complement, not replace, other established methods for crawler verification. Techniques such as forward-confirmed reverse DNS (FCrDNS) lookups remain a vital part of a comprehensive verification strategy. This specification provides a scalable, machine-readable component that can be integrated into a multi-layered verification process.<a href="#section-1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="format">
+<section id="section-2">
+      <h2 id="name-format">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-format" class="section-name selfRef">Format</a>
+      </h2>
+<div id="top-level-object-definition">
+<section id="section-2.1">
+        <h3 id="name-top-level-object-definition">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-top-level-object-definition" class="section-name selfRef">Top-Level Object Definition</a>
+        </h3>
+<p id="section-2.1-1">An IP range publication file <span class="bcp14">MUST</span> be a single JSON object. The text encoding of the file <span class="bcp14">MUST</span> be UTF-8. This top-level object serves as the root container for essential metadata and the list of IP prefixes.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The top-level object contains the fields defined in Table 1.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Field Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Requirement</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">formatVersion</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span class="bcp14">MUST</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">The version of this specification that the file conforms to, represented as a string in "major.minor" format (e.g., "1.0"). Consumers <span class="bcp14">MUST</span> use this to handle potential future breaking changes. See Section 3.2 for processing rules.</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">synctoken</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span class="bcp14">MUST</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">An opaque synchronization token that changes whenever there is a change to any metadata associated with one or more prefixes.</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">creationTime</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span class="bcp14">MUST</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">An ISO 8601 timestamp in the "Z" timezone (UTC) indicating when the file was generated (e.g., "2025-08-15T14:30:00Z").</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">notes</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span class="bcp14">OPTIONAL</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">A human-readable string containing any relevant notes, disclaimers, or comments from the publisher. This can be used to provide context that is not captured by the structured data.</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">prefixes</td>
+              <td class="text-left" rowspan="1" colspan="1">Array</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span class="bcp14">MUST</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">An array of Prefix Objects, as defined in Section 2.3. Each object in the array describes an IPv4 or IPv6 address range. This array <span class="bcp14">MAY</span> be empty if the publisher currently has no active IP ranges to declare.</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+<div id="the-prefixes-array">
+<section id="section-2.2">
+        <h3 id="name-the-prefixes-array">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-the-prefixes-array" class="section-name selfRef">The prefixes Array</a>
+        </h3>
+<p id="section-2.2-1">The prefixes member of the top-level object <span class="bcp14">MUST</span> contain an array of JSON objects. Each of these objects is a Prefix Object, as defined in Section 2.3.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">To simplify implementation for consumers, there <span class="bcp14">MUST</span> be a single, unified array for both IPv4 and IPv6 prefixes.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="the-prefix-object">
+<section id="section-2.3">
+        <h3 id="name-the-prefix-object">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-the-prefix-object" class="section-name selfRef">The Prefix Object</a>
+        </h3>
+<p id="section-2.3-1">Each object within the prefixes array represents a single IP address range and its associated metadata.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">A Prefix Object <span class="bcp14">MUST</span> contain exactly one of either the ipv4Prefix field or the ipv6Prefix field. An object containing both or neither of these fields is invalid and <span class="bcp14">MUST</span> be ignored by consumers. The fields are defined in Table 2.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<table class="center" id="table-2">
+          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Field Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Type</th>
+              <th class="text-left" rowspan="1" colspan="1">Requirement</th>
+              <th class="text-left" rowspan="1" colspan="1">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ipv4Prefix</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">CONDITIONAL</td>
+              <td class="text-left" rowspan="1" colspan="1">The IPv4 address range in Classless Inter-Domain Routing (CIDR) notation (e.g., "66.249.64.0/20"). This field <span class="bcp14">MUST</span> be present if the ipv6Prefix field is absent.</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ipv6Prefix</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">CONDITIONAL</td>
+              <td class="text-left" rowspan="1" colspan="1">The IPv6 address range in CIDR notation (e.g., "2001:4860:4000::/36"). This field <span class="bcp14">MUST</span> be present if the ipv4Prefix field is absent.</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">service</td>
+              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <span class="bcp14">OPTIONAL</span>
+</td>
+              <td class="text-left" rowspan="1" colspan="1">A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples could include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies.</td>
+            </tr>
+          </tbody>
+        </table>
+</section>
+</div>
+</section>
+</div>
+<div id="processing-and-consumption-rules">
+<section id="section-3">
+      <h2 id="name-processing-and-consumption-">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-processing-and-consumption-" class="section-name selfRef">Processing and Consumption Rules</a>
+      </h2>
+<div id="fetching-and-caching">
+<section id="section-3.1">
+        <h3 id="name-fetching-and-caching">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-fetching-and-caching" class="section-name selfRef">Fetching and Caching</a>
+        </h3>
+<p id="section-3.1-1">Consumers <span class="bcp14">SHOULD</span> fetch the IP range publication file from a stable URL provided by the publisher in a machine readable format. The file location <span class="bcp14">MUST</span> be disclosed by the publisher of the file in the page that describes the crawler.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Publishers <span class="bcp14">SHOULD</span> update the file when there's any change to the prefixes or every 24 hours, even if the only update is to <code>creationTime</code>. Consumers <span class="bcp14">SHOULD</span> implement a polling mechanism to check for updates at a reasonable interval, such as once every 24 hours. Consumers <span class="bcp14">MUST NOT</span> poll more frequently than once per hour unless explicitly permitted by the publisher's documentation or HTTP caching headers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">To minimize server load for the publisher and reduce unnecessary bandwidth usage for the consumer, consumers <span class="bcp14">MUST</span> respect standard HTTP caching headers that may be present in the response, such as Cache-Control, ETag, and Last-Modified. Publishers <span class="bcp14">SHOULD</span> provide these headers to facilitate efficient caching.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="handling-format-versioning">
+<section id="section-3.2">
+        <h3 id="name-handling-format-versioning">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-handling-format-versioning" class="section-name selfRef">Handling Format Versioning</a>
+        </h3>
+<p id="section-3.2-1">To ensure long-term stability and allow for future evolution of this specification, consumers <span class="bcp14">MUST</span> inspect the formatVersion field in the top-level object of the file. The version is expressed as "major.minor".<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2-2.1">
+            <p id="section-3.2-2.1.1">Major Version Changes: A change in the major version number (e.g., from "1.0" to "2.0") indicates a non-backwards compatible change to the specification. If a consumer encounters a file with a major version number greater than the major version it is programmed to handle, the consumer <span class="bcp14">MUST NOT</span> attempt to parse the file. It <span class="bcp14">SHOULD</span> treat this situation as an error and <span class="bcp14">MAY</span> continue to use its last known valid list until it can be updated to support the new version. This prevents the misinterpretation of data from a significantly altered schema.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-2.2">
+            <p id="section-3.2-2.2.1">Minor Version Changes: A change in the minor version number (e.g., from "1.0" to "1.1") indicates the addition of new features or fields that are backward-compatible. For example, a new <span class="bcp14">OPTIONAL</span> field might be added to the Prefix Object. A consumer programmed to handle version "1.0" <span class="bcp14">MUST</span> be able to correctly parse a file with version "1.1". The minor version number increases numerically independently of the major version number, for instance: 1.9 -&gt; 1.10 -&gt; 1.11. The consumer <span class="bcp14">MUST</span> ignore any unrecognized fields or properties within the JSON objects.<a href="#section-3.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="prefix-aggregation-and-specificity">
+<section id="section-3.3">
+        <h3 id="name-prefix-aggregation-and-spec">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-prefix-aggregation-and-spec" class="section-name selfRef">Prefix Aggregation and Specificity</a>
+        </h3>
+<p id="section-3.3-1">A publication file <span class="bcp14">MAY</span> contain overlapping IP address ranges. For instance, a publisher might list a broad range like 198.51.100.0/22 with a generic service tag, and also list a more specific range within it, such as 198.51.100.0/24, with a more specific service tag.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">When a consumer evaluates a specific IP address against the list, it <span class="bcp14">MAY</span> match multiple Prefix Objects. In such cases, the consumer's logic <span class="bcp14">SHOULD</span> use the data from the Prefix Object with the most specific CIDR range (i.e., the one with the largest prefix length) for that IP address.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="use-cases-and-examples">
+<section id="section-4">
+      <h2 id="name-use-cases-and-examples">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-use-cases-and-examples" class="section-name selfRef">Use Cases and Examples</a>
+      </h2>
+<div id="example-1-basic-publication">
+<section id="section-4.1">
+        <h3 id="name-example-1-basic-publication">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-example-1-basic-publication" class="section-name selfRef">Example 1: Basic Publication</a>
+        </h3>
+<p id="section-4.1-1">This example demonstrates a minimal, valid file for a publisher with a single type of automated client. It uses only the required fields, making it simple to generate and consume.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2"><code>
+{
+  "formatVersion": "1.0",
+  "creationTime": "2025-08-15T14:30:00Z",
+  "prefixes": [
+    {
+      "ipv4Prefix": "66.249.64.0/20"
+    },
+    {
+      "ipv4Prefix": "34.64.0.0/12"
+    },
+    {
+      "ipv6Prefix": "2001:4860:4000::/36"
+    }
+  ]
+}
+</code><a href="#section-4.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="example-2-advanced-publication-with-multiple-services">
+<section id="section-4.2">
+        <h3 id="name-example-2-advanced-publicat">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-example-2-advanced-publicat" class="section-name selfRef">Example 2: Advanced Publication with Multiple Services</a>
+        </h3>
+<p id="section-4.2-1">This example illustrates a more complex file from a large cloud provider that uses optional fields to provide richer context. It differentiates between IP ranges used for a general web crawler, a specialized ads crawler, and a user-triggered fetching service. This allows consumers to implement more granular access policies.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-2"><code>
+{
+  "formatVersion": "1.0",
+  "creationTime": "2025-09-01T10:00:00Z",
+  "notes": "IP ranges for ExampleCloud services. For verification, FCrDNS is also recommended.",
+  "Prefixes": "FILL OUT WITH EXAMPLE"
+}
+</code><a href="#section-4.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="example-3-aggregated-publication-by-a-third-party">
+<section id="section-4.3">
+        <h3 id="name-example-3-aggregated-public">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-example-3-aggregated-public" class="section-name selfRef">Example 3: Aggregated Publication by a Third Party</a>
+        </h3>
+<p id="section-4.3-1">This example shows how a third-party security provider or an open-source project could aggregate IP lists from multiple publishers into a single file. The service field is used to attribute each prefix to its original source, allowing consumers to apply policies based on the original publisher. This reflects the use case of services that provide curated lists of known bots.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2"><code>
+{
+  "formatVersion": "1.0",
+  "creationTime": "2025-09-02T00:00:00Z",
+  "notes": "Aggregated list of known good bots. Data is updated daily from original publisher sources.",
+  "Prefixes": FILL OUT WITH EXAMPLE
+}
+</code><a href="#section-4.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="conventions-and-definitions">
-<section id="section-2">
+<section id="section-5">
       <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-5-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-3">
+<section id="section-6">
       <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">TODO Security<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-7">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">This document has no IANA actions.<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">
-<section id="section-5">
+<section id="section-8">
       <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
@@ -1237,11 +1488,11 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Gary Illyes</span></div>
+<div dir="auto" class="left"><span class="org">Independent</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:synack@garyillyes.com" class="email">synack@garyillyes.com</a>
 </div>
 </address>
 </section>
