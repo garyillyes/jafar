@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-15T01:49:14.246433+00:00",
+  "timestamp": "2026-01-18T01:57:04.334839+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -49,6 +49,39 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOP5wKzs7jqRwR",
+      "title": "synctoken is a MUST but not provided in the examples",
+      "url": "https://github.com/garyillyes/jafar/issues/1",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "None of the examples provided include a synctoken. It could be worth adding so examples are complete.\n\nFor instance, I've complete the first example on https://github.com/thibmeu/jafar/blob/main/examples/1-basic-publication.json",
+      "createdAt": "2026-01-15T22:44:26Z",
+      "updatedAt": "2026-01-15T22:44:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOP5wKzs7jqUU9",
+      "title": "Split IP addresses range into address and prefix_len",
+      "url": "https://github.com/garyillyes/jafar/issues/2",
+      "state": "OPEN",
+      "author": "thibmeu",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I wrote a JSON schema validation for JAFAR in https://github.com/thibmeu/jafar.\n\nOne thing I noticed, which is similar in some other languages, is that there is a type for ipv4/ipv6, but none for the ip ranges. Something like\n\n```\n{\n  \"address\": IPV4,\n  \"prefix_len\": number,\n}\n```\n\nI'm not sure to what extent this is prevalent, therefore opening an issue as a discussion point.",
+      "createdAt": "2026-01-15T22:48:01Z",
+      "updatedAt": "2026-01-15T22:48:01Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": []
 }
