@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-03T02:12:56.687936+00:00",
+  "timestamp": "2026-02-05T02:09:01.788729+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -79,6 +79,70 @@
       "body": "I wrote a JSON schema validation for JAFAR in https://github.com/thibmeu/jafar.\n\nOne thing I noticed, which is similar in some other languages, is that there is a type for ipv4/ipv6, but none for the ip ranges. Something like\n\n```\n{\n  \"address\": IPV4,\n  \"prefix_len\": number,\n}\n```\n\nI'm not sure to what extent this is prevalent, therefore opening an issue as a discussion point.",
       "createdAt": "2026-01-15T22:48:01Z",
       "updatedAt": "2026-01-15T22:48:01Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOP5wKzs7oWLuk",
+      "title": "Replace in-body `formatVersion` and `synctoken` with Media Types and ETags",
+      "url": "https://github.com/garyillyes/jafar/issues/3",
+      "state": "OPEN",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Feedback from the mailing list suggests that the current formatVersion and synctoken fields are redundant with existing HTTP mechanisms and are not present in existing deployments.\n\n- Format Version: `formatVersion` is a \"bad pattern\" that is redundant with Media Types. Martin suggests to remove this field and instead register a specific Media Type (potentially with a default version of 1.0) to signal content model compatibility.\n- Sync Token: Thibault  suggests the `synctoken` is redundant with the HTTP ETag header, although Martin seems to disagree. It is suggested to make this field OPTIONAL or remove it entirely in favor of standard HTTP caching mechanisms (RFC 9110 Section 8.8.3).\n\n**Proposed Action:**\n\n1. Remove formatVersion from the JSON body and specify a Media Type.\n2. Decide whether to remove synctoken (or make it optional) and potentially require the use of ETag for integrity and caching.\n\nReferences:\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/)\n",
+      "createdAt": "2026-02-04T19:41:42Z",
+      "updatedAt": "2026-02-04T19:41:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOP5wKzs7oWOeZ",
+      "title": "Revisit Data Model Cardinality (Single vs. Multiple Services)",
+      "url": "https://github.com/garyillyes/jafar/issues/4",
+      "state": "OPEN",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Martin has questioned the utility of defining multiple services within a single JAFAR file ([`service` tag](https://www.ietf.org/archive/id/draft-illyes-aipref-jafar-00.html#table-2)).\n\nWhile large operators share infrastructure, it may be cleaner to either copy identical content or have different files for different services (e.g., \"googlebot\" vs others). The current draft structure might be \"over-engineered\" compared to the reality where a crawler operates a logical service from IP ranges.\n\n**Proposed Structure:**\nMartin  suggested a simplified structure that focuses on a single service definition:\n\n```JSON\n{\n  \"service\": \"googlebot\",\n  \"description\": \"https://some.url/for/googlebot\",\n  \"notes\": \"...\",\n  \"lastUpdated\": \"2026-01-01T11:00Z\",\n  \"ipv4\": [\"192.0.2/8\", \"...\"],\n  \"ipv6\": [\"2404:6800:4006::/56\", \"...\"]\n}\n```\n\n**Proposed Action:**\nDiscuss changing the cardinality rules to support one service per file to reduce complexity for consumers.\n\nReference:\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/)",
+      "createdAt": "2026-02-04T19:45:07Z",
+      "updatedAt": "2026-02-04T19:45:07Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOP5wKzs7oWREd",
+      "title": "Define Forward Compatibility (Ignore Unknown Fields)",
+      "url": "https://github.com/garyillyes/jafar/issues/5",
+      "state": "OPEN",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft does not currently specify how clients/consumers should handle additional fields present in the JSON that are not defined in the spec.\n\nTo ensure forward compatibility and clearer schema validation, it is suggested to add specific language regarding extensibility.\n\n**Proposed Text (by Thibault):**\n\"Services MAY include additional fields. Consumers MUST ignore unknown fields.\".\n\nReference: \n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)",
+      "createdAt": "2026-02-04T19:48:20Z",
+      "updatedAt": "2026-02-04T19:48:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOP5wKzs7oWTKd",
+      "title": "Update Examples to Match Field Definitions",
+      "url": "https://github.com/garyillyes/jafar/issues/6",
+      "state": "OPEN",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Thibault  notes that there is a discrepancy between the current draft definitions, the current implementations in use, and the provided examples. Specifically, `synctoken` is marked as a \"MUST\" in the text, but it is absent from the provided examples (and live implementations).\n\n**Proposed Action:**\nUpdate the examples to include all mandatory fields, or update the schema if fields like synctoken are removed.\n\nReference: \n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)",
+      "createdAt": "2026-02-04T19:50:56Z",
+      "updatedAt": "2026-02-04T19:50:56Z",
       "closedAt": null,
       "comments": []
     }
