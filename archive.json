@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-15T02:32:03.737353+00:00",
+  "timestamp": "2026-03-17T02:11:47.740010+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -110,9 +110,17 @@
       "labels": [],
       "body": "Martin has questioned the utility of defining multiple services within a single JAFAR file ([`service` tag](https://www.ietf.org/archive/id/draft-illyes-aipref-jafar-00.html#table-2)).\n\nWhile large operators share infrastructure, it may be cleaner to either copy identical content or have different files for different services (e.g., \"googlebot\" vs others). The current draft structure might be \"over-engineered\" compared to the reality where a crawler operates a logical service from IP ranges.\n\n**Proposed Structure:**\nMartin  suggested a simplified structure that focuses on a single service definition:\n\n```JSON\n{\n  \"service\": \"googlebot\",\n  \"description\": \"https://some.url/for/googlebot\",\n  \"notes\": \"...\",\n  \"lastUpdated\": \"2026-01-01T11:00Z\",\n  \"ipv4\": [\"192.0.2/8\", \"...\"],\n  \"ipv6\": [\"2404:6800:4006::/56\", \"...\"]\n}\n```\n\n**Proposed Action:**\nDiscuss changing the cardinality rules to support one service per file to reduce complexity for consumers.\n\nReference:\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/)",
       "createdAt": "2026-02-04T19:45:07Z",
-      "updatedAt": "2026-02-04T19:45:07Z",
+      "updatedAt": "2026-03-16T14:32:23Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "dwsmart",
+          "authorAssociation": "NONE",
+          "body": "I broadly agree with this, if I am only interested for example in allowing `Googlebot`, I would as a consumer find it much easier to subscribe to a Service specific file, and not waste bytes and time having to parse out only the relevant ones.\n\nI also imagine it's perhaps easier for publishers to create files that automatically contain a subset of IP ranges filtered to appropriate services, perhaps even determined from URL, e.g. `/ipranges/all/ip-ranges.json` for all published IP ranges, `/ipranges/googlebot/ip-ranges.json`\n\nI also like the addition of a field that could act as a pointer as to where to find out more about the service. I get there is a requirement to publish a link to the jafar file on the crawler description page, I think it would be good to have this file point back.\n\nAn alternative might be allow either a string or an array of strings for service if it remains scoped in the prefixes, e.g.\n\n```\n{\n  \"creation_time\": \"2026-03-16T13:00:00.000Z\",\n  \"synctoken\": \"....\",\n  \"notes\": \"This file contains the IP ranges for some services\",\n  \"formatVersion\": \"1.0\",\n  \"prefixes\": [\n    {\n      \"ipv4Prefix\": \"66.249.78.32/272\",\n      \"service\": [\n        {\n          \"name\": \"Googlebot\",\n          \"explainer\": \"https://developers.google.com/search/docs/advanced/crawling/verifying-googlebot\"\n        },\n        {\n          \"name\": \"Google-Safety\",\n          \"explainer\": \"https://developers.google.com/crawling/docs/crawlers-fetchers/google-special-case-crawlers\"\n        }\n      ]\n    }\n  ]\n}\n```\n\nThat would avoid having to repeat IP addresses for each service.\n\n",
+          "createdAt": "2026-03-16T14:32:23Z",
+          "updatedAt": "2026-03-16T14:32:23Z"
+        }
+      ]
     },
     {
       "number": 5,
