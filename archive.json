@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-31T02:31:16.795235+00:00",
+  "timestamp": "2026-04-02T02:27:31.567496+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -151,6 +151,22 @@
       "body": "Thibault  notes that there is a discrepancy between the current draft definitions, the current implementations in use, and the provided examples. Specifically, `synctoken` is marked as a \"MUST\" in the text, but it is absent from the provided examples (and live implementations).\n\n**Proposed Action:**\nUpdate the examples to include all mandatory fields, or update the schema if fields like synctoken are removed.\n\nReference: \n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)",
       "createdAt": "2026-02-04T19:50:56Z",
       "updatedAt": "2026-02-04T19:50:56Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOP5wKzs75urC1",
+      "title": "Add optional \"purpose\" field to Prefix Object to indicate agent interaction type",
+      "url": "https://github.com/garyillyes/jafar/issues/7",
+      "state": "OPEN",
+      "author": "martech-engineer",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "## Description\n\nThis proposal suggests extending the Prefix Object with an optional field to indicate agent interaction type, enabling more reliable identification and handling of automated HTTP clients.\n\nIn production environments, IP ranges alone are often insufficient to determine how an automated client interacts with content. The same infrastructure may be used across multiple interaction modes, each carrying different implications for access control, rate limiting, caching, and monitoring.\n\n## Common Interaction Modes\n\n| Mode | Description |\n|------|-------------|\n| Large-scale crawling | For indexing |\n| Training data collection | Dataset construction |\n| Real-time retrieval | For AI-generated responses |\n| User-triggered fetches | On-demand access |\n\n## Proposed Extension\n\nIntroduce a lightweight, optional `purpose` field in the Prefix Object to indicate the primary interaction type.\n\n**Example**\n\n```json\n{\n  \"ipv4Prefix\": \"66.249.64.0/20\",\n  \"service\": \"ExampleBot\",\n  \"purpose\": \"on-demand\"\n}\n```\n\n**Potential values** *(non-normative)*: `discovery`, `indexing`, `on-demand`, `support`\n\n## Rationale\n\n**Policy Alignment**: Enables infrastructure-level traffic handling through stable, non-sensitive classifications, without exposing internal system behavior or requiring deep packet inspection.\n\n**Operational Stability**: Provides a consistent categorization layer that remains valid even as underlying systems and use cases evolve.\n\n**Reduced Friction**: Helps site operators distinguish between different classes of automated traffic more reliably, reducing overblocking and improving successful interactions.\n\n**Ecosystem Efficiency**: Minimizes reliance on platform-specific documentation and manual rule maintenance, enabling more automated and standardized handling of trusted clients.\n\n**Backward Compatibility**: Introduces no breaking changes; the field is optional and fully compatible with existing implementations (\u00a7 3.2).\n\n## Context\n\nAs automated web access becomes more diverse, site operators need simple, stable signals to distinguish between different classes of automated traffic. A minimal classification layer at the prefix level enables more predictable and scalable handling without requiring deep inspection or platform-specific heuristics, improving interoperability and reducing operational overhead on both sides.",
+      "createdAt": "2026-04-01T20:43:48Z",
+      "updatedAt": "2026-04-01T20:43:48Z",
       "closedAt": null,
       "comments": []
     }
