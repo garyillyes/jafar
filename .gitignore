@@ -22,3 +22,4 @@ draft-illyes-aipref-jafar.xml
 package-lock.json
 report.xml
 !requirements.txt
+jafar.code-workspace
