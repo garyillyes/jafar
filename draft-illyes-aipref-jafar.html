@@ -7,26 +7,32 @@
 <title>A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients</title>
 <meta content="Gary Illyes" name="author">
 <meta content="
-       This document defines a standardized JSON format for automated HTTP client (e.g., web crawlers, AI bots) operators to disclose their IP address ranges publicly. A consistent, machine-readable format for IP range publication simplifies the task of identifying and verifying legitimate automated traffic, thereby decreasing maintenance load on website operators while reducing the risk of inadvertently blocking beneficial clients. This specification codifies and extends common existing practices to provide a simple yet extensible format that accommodates a variety of use cases. 
+       This document defines a standardized JSON format for automated HTTP client
+(e.g., web crawlers, AI bots) operators to disclose their IP address ranges
+publicly. A consistent, machine-readable format for IP range publication
+simplifies the task of identifying and verifying legitimate automated traffic,
+thereby decreasing maintenance load on website operators while reducing the risk
+of inadvertently blocking beneficial clients. This specification codifies and
+extends common existing practices to provide a simple yet extensible format that
+accommodates a variety of use cases. 
     " name="description">
-<meta content="xml2rfc 3.30.2" name="generator">
+<meta content="xml2rfc 3.32.0" name="generator">
 <meta content="next generation" name="keyword">
 <meta content="sparkling distributed ledger" name="keyword">
 <meta content="draft-illyes-aipref-jafar-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.2
-    Python 3.12.11
+  xml2rfc 3.32.0
+    Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
-    intervaltree 3.1.0
+    intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 5.3.1
-    platformdirs 4.4.0
+    lxml 6.0.2
+    platformdirs 4.9.4
     pycountry 24.6.1
-    PyYAML 6.0.2
+    PyYAML 6.0.3
     requests 2.32.5
-    setuptools 80.9.0
-    wcwidth 0.2.13
+    wcwidth 0.6.0
 -->
 <link href="draft-illyes-aipref-jafar.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -167,7 +173,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -175,7 +181,8 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -567,6 +574,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -637,7 +645,7 @@ a.pilcrow {
   }
 }
 @media not print {
-  :hover > a.pilcrow {
+  :hover > a.pilcrow, a.pilcrow:focus {
     opacity: 1;
   }
   a.pilcrow[href]:hover {
@@ -1045,11 +1053,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">JAFAR</td>
-<td class="right">September 2025</td>
+<td class="right">April 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Illyes</td>
-<td class="center">Expires 3 April 2026</td>
+<td class="center">Expires 11 October 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1057,17 +1065,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">AI Preferences</dd>
+<dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-illyes-aipref-jafar-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-09-30" class="published">30 September 2025</time>
+<time datetime="2026-04-09" class="published">9 April 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-04-03">3 April 2026</time></dd>
+<dd class="expires"><time datetime="2026-10-11">11 October 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1080,7 +1088,14 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines a standardized JSON format for automated HTTP client (e.g., web crawlers, AI bots) operators to disclose their IP address ranges publicly. A consistent, machine-readable format for IP range publication simplifies the task of identifying and verifying legitimate automated traffic, thereby decreasing maintenance load on website operators while reducing the risk of inadvertently blocking beneficial clients. This specification codifies and extends common existing practices to provide a simple yet extensible format that accommodates a variety of use cases.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines a standardized JSON format for automated HTTP client
+(e.g., web crawlers, AI bots) operators to disclose their IP address ranges
+publicly. A consistent, machine-readable format for IP range publication
+simplifies the task of identifying and verifying legitimate automated traffic,
+thereby decreasing maintenance load on website operators while reducing the risk
+of inadvertently blocking beneficial clients. This specification codifies and
+extends common existing practices to provide a simple yet extensible format that
+accommodates a variety of use cases.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1112,7 +1127,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 April 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1121,7 +1136,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2025 IETF Trust and the persons identified as the
+            Copyright (c) 2026 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1210,9 +1225,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This document specifies a data format using the JavaScript Object Notation (JSON). It is intended for the publication of IP address ranges associated with automated HTTP clients.
-The scope of this specification is limited to the syntax and semantics of the JSON file itself. It does not specify the transport mechanism for retrieving the file. It also does not prescribe specific policies for how consumers should use the data (e.g., allowlisting, rate-limiting, or monitoring).
-This format is intended to complement, not replace, other established methods for crawler verification. Techniques such as forward-confirmed reverse DNS (FCrDNS) lookups remain a vital part of a comprehensive verification strategy. This specification provides a scalable, machine-readable component that can be integrated into a multi-layered verification process.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">This document specifies a data format using the JavaScript Object Notation
+(JSON). It is intended for the publication of IP address ranges associated with
+automated HTTP clients.
+The scope of this specification is limited to the syntax and semantics of the
+JSON file itself. It does not specify the transport mechanism for retrieving the
+file. It also does not prescribe specific policies for how consumers should use
+the data (e.g., allowlisting, rate-limiting, or monitoring).
+This format is intended to complement, not replace, other established methods
+for crawler verification. Techniques such as forward-confirmed reverse DNS
+(FCrDNS) lookups remain a vital part of a comprehensive verification strategy.
+This specification provides a scalable, machine-readable component that can be
+integrated into a multi-layered verification process.<a href="#section-1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="format">
@@ -1225,7 +1249,9 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-top-level-object-definition">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-top-level-object-definition" class="section-name selfRef">Top-Level Object Definition</a>
         </h3>
-<p id="section-2.1-1">An IP range publication file <span class="bcp14">MUST</span> be a single JSON object. The text encoding of the file <span class="bcp14">MUST</span> be UTF-8. This top-level object serves as the root container for essential metadata and the list of IP prefixes.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">An IP range publication file <span class="bcp14">MUST</span> be a single JSON object. The text encoding of
+the file <span class="bcp14">MUST</span> be UTF-8. This top-level object serves as the root container for
+essential metadata and the list of IP prefixes.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1-2">The top-level object contains the fields defined in Table 1.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <table class="center" id="table-1">
           <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
@@ -1287,8 +1313,10 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-the-prefixes-array">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-the-prefixes-array" class="section-name selfRef">The prefixes Array</a>
         </h3>
-<p id="section-2.2-1">The prefixes member of the top-level object <span class="bcp14">MUST</span> contain an array of JSON objects. Each of these objects is a Prefix Object, as defined in Section 2.3.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2">To simplify implementation for consumers, there <span class="bcp14">MUST</span> be a single, unified array for both IPv4 and IPv6 prefixes.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">The prefixes member of the top-level object <span class="bcp14">MUST</span> contain an array of JSON
+objects. Each of these objects is a Prefix Object, as defined in Section 2.3.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">To simplify implementation for consumers, there <span class="bcp14">MUST</span> be a single, unified array
+for both IPv4 and IPv6 prefixes.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="the-prefix-object">
@@ -1296,8 +1324,11 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-the-prefix-object">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-the-prefix-object" class="section-name selfRef">The Prefix Object</a>
         </h3>
-<p id="section-2.3-1">Each object within the prefixes array represents a single IP address range and its associated metadata.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-<p id="section-2.3-2">A Prefix Object <span class="bcp14">MUST</span> contain exactly one of either the ipv4Prefix field or the ipv6Prefix field. An object containing both or neither of these fields is invalid and <span class="bcp14">MUST</span> be ignored by consumers. The fields are defined in Table 2.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-1">Each object within the prefixes array represents a single IP address range and
+its associated metadata.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">A Prefix Object <span class="bcp14">MUST</span> contain exactly one of either the ipv4Prefix field or the
+ipv6Prefix field. An object containing both or neither of these fields is
+invalid and <span class="bcp14">MUST</span> be ignored by consumers. The fields are defined in Table 2.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <table class="center" id="table-2">
           <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
 <thead>
@@ -1345,9 +1376,19 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-fetching-and-caching">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-fetching-and-caching" class="section-name selfRef">Fetching and Caching</a>
         </h3>
-<p id="section-3.1-1">Consumers <span class="bcp14">SHOULD</span> fetch the IP range publication file from a stable URL provided by the publisher in a machine readable format. The file location <span class="bcp14">MUST</span> be disclosed by the publisher of the file in the page that describes the crawler.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">Publishers <span class="bcp14">SHOULD</span> update the file when there's any change to the prefixes or every 24 hours, even if the only update is to <code>creationTime</code>. Consumers <span class="bcp14">SHOULD</span> implement a polling mechanism to check for updates at a reasonable interval, such as once every 24 hours. Consumers <span class="bcp14">MUST NOT</span> poll more frequently than once per hour unless explicitly permitted by the publisher's documentation or HTTP caching headers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">To minimize server load for the publisher and reduce unnecessary bandwidth usage for the consumer, consumers <span class="bcp14">MUST</span> respect standard HTTP caching headers that may be present in the response, such as Cache-Control, ETag, and Last-Modified. Publishers <span class="bcp14">SHOULD</span> provide these headers to facilitate efficient caching.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Consumers <span class="bcp14">SHOULD</span> fetch the IP range publication file from a stable URL provided
+by the publisher in a machine readable format. The file location <span class="bcp14">MUST</span> be
+disclosed by the publisher of the file in the page that describes the crawler.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Publishers <span class="bcp14">SHOULD</span> update the file when there's any change to the prefixes or
+every 24 hours, even if the only update is to <code>creationTime</code>. Consumers <span class="bcp14">SHOULD</span>
+implement a polling mechanism to check for updates at a reasonable interval,
+such as once every 24 hours. Consumers <span class="bcp14">MUST NOT</span> poll more frequently than once
+per hour unless explicitly permitted by the publisher's documentation or HTTP
+caching headers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">To minimize server load for the publisher and reduce unnecessary bandwidth usage
+for the consumer, consumers <span class="bcp14">MUST</span> respect standard HTTP caching headers that may
+be present in the response, such as Cache-Control, ETag, and Last-Modified.
+Publishers <span class="bcp14">SHOULD</span> provide these headers to facilitate efficient caching.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="handling-format-versioning">
@@ -1355,13 +1396,28 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-handling-format-versioning">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-handling-format-versioning" class="section-name selfRef">Handling Format Versioning</a>
         </h3>
-<p id="section-3.2-1">To ensure long-term stability and allow for future evolution of this specification, consumers <span class="bcp14">MUST</span> inspect the formatVersion field in the top-level object of the file. The version is expressed as "major.minor".<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">To ensure long-term stability and allow for future evolution of this
+specification, consumers <span class="bcp14">MUST</span> inspect the formatVersion field in the top-level
+object of the file. The version is expressed as "major.minor".<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2-2.1">
-            <p id="section-3.2-2.1.1">Major Version Changes: A change in the major version number (e.g., from "1.0" to "2.0") indicates a non-backwards compatible change to the specification. If a consumer encounters a file with a major version number greater than the major version it is programmed to handle, the consumer <span class="bcp14">MUST NOT</span> attempt to parse the file. It <span class="bcp14">SHOULD</span> treat this situation as an error and <span class="bcp14">MAY</span> continue to use its last known valid list until it can be updated to support the new version. This prevents the misinterpretation of data from a significantly altered schema.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-2.1.1">Major Version Changes: A change in the major version number (e.g., from "1.0"
+to "2.0") indicates a non-backwards compatible change to the specification. If a
+consumer encounters a file with a major version number greater than the major
+version it is programmed to handle, the consumer <span class="bcp14">MUST NOT</span> attempt to parse the
+file. It <span class="bcp14">SHOULD</span> treat this situation as an error and <span class="bcp14">MAY</span> continue to use its
+last known valid list until it can be updated to support the new version. This
+prevents the misinterpretation of data from a significantly altered schema.<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.2-2.2">
-            <p id="section-3.2-2.2.1">Minor Version Changes: A change in the minor version number (e.g., from "1.0" to "1.1") indicates the addition of new features or fields that are backward-compatible. For example, a new <span class="bcp14">OPTIONAL</span> field might be added to the Prefix Object. A consumer programmed to handle version "1.0" <span class="bcp14">MUST</span> be able to correctly parse a file with version "1.1". The minor version number increases numerically independently of the major version number, for instance: 1.9 -&gt; 1.10 -&gt; 1.11. The consumer <span class="bcp14">MUST</span> ignore any unrecognized fields or properties within the JSON objects.<a href="#section-3.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-2.2.1">Minor Version Changes: A change in the minor version number (e.g., from "1.0"
+to "1.1") indicates the addition of new features or fields that are
+backward-compatible. For example, a new <span class="bcp14">OPTIONAL</span> field might be added to the
+Prefix Object. A consumer programmed to handle version "1.0" <span class="bcp14">MUST</span> be able to
+correctly parse a file with version "1.1". The minor version number increases
+numerically independently of the major version number,
+for instance: 1.9 -&gt; 1.10 -&gt; 1.11. The consumer <span class="bcp14">MUST</span> ignore any unrecognized
+fields or properties within the JSON objects.<a href="#section-3.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1371,8 +1427,14 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-prefix-aggregation-and-spec">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-prefix-aggregation-and-spec" class="section-name selfRef">Prefix Aggregation and Specificity</a>
         </h3>
-<p id="section-3.3-1">A publication file <span class="bcp14">MAY</span> contain overlapping IP address ranges. For instance, a publisher might list a broad range like 198.51.100.0/22 with a generic service tag, and also list a more specific range within it, such as 198.51.100.0/24, with a more specific service tag.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">When a consumer evaluates a specific IP address against the list, it <span class="bcp14">MAY</span> match multiple Prefix Objects. In such cases, the consumer's logic <span class="bcp14">SHOULD</span> use the data from the Prefix Object with the most specific CIDR range (i.e., the one with the largest prefix length) for that IP address.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">A publication file <span class="bcp14">MAY</span> contain overlapping IP address ranges. For instance, a
+publisher might list a broad range like 198.51.100.0/22 with a generic service
+tag, and also list a more specific range within it, such as 198.51.100.0/24,
+with a more specific service tag.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">When a consumer evaluates a specific IP address against the list, it <span class="bcp14">MAY</span> match
+multiple Prefix Objects. In such cases, the consumer's logic <span class="bcp14">SHOULD</span> use the data
+from the Prefix Object with the most specific CIDR range (i.e., the one with the
+largest prefix length) for that IP address.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1387,7 +1449,9 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-example-1-basic-publication">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-example-1-basic-publication" class="section-name selfRef">Example 1: Basic Publication</a>
         </h3>
-<p id="section-4.1-1">This example demonstrates a minimal, valid file for a publisher with a single type of automated client. It uses only the required fields, making it simple to generate and consume.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">This example demonstrates a minimal, valid file for a publisher with a single
+type of automated client. It uses only the required fields, making it simple to
+generate and consume.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2"><code>
 {
   "formatVersion": "1.0",
@@ -1412,7 +1476,11 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-example-2-advanced-publicat">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-example-2-advanced-publicat" class="section-name selfRef">Example 2: Advanced Publication with Multiple Services</a>
         </h3>
-<p id="section-4.2-1">This example illustrates a more complex file from a large cloud provider that uses optional fields to provide richer context. It differentiates between IP ranges used for a general web crawler, a specialized ads crawler, and a user-triggered fetching service. This allows consumers to implement more granular access policies.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">This example illustrates a more complex file from a large cloud provider that
+uses optional fields to provide richer context. It differentiates between IP
+ranges used for a general web crawler, a specialized ads crawler, and a
+user-triggered fetching service. This allows consumers to implement more
+granular access policies.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2"><code>
 {
   "formatVersion": "1.0",
@@ -1428,7 +1496,11 @@ This format is intended to complement, not replace, other established methods fo
         <h3 id="name-example-3-aggregated-public">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-example-3-aggregated-public" class="section-name selfRef">Example 3: Aggregated Publication by a Third Party</a>
         </h3>
-<p id="section-4.3-1">This example shows how a third-party security provider or an open-source project could aggregate IP lists from multiple publishers into a single file. The service field is used to attribute each prefix to its original source, allowing consumers to apply policies based on the original publisher. This reflects the use case of services that provide curated lists of known bots.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">This example shows how a third-party security provider or an open-source project
+could aggregate IP lists from multiple publishers into a single file. The
+service field is used to attribute each prefix to its original source, allowing
+consumers to apply policies based on the original publisher. This reflects the
+use case of services that provide curated lists of known bots.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2"><code>
 {
   "formatVersion": "1.0",
@@ -1457,7 +1529,20 @@ appear in all capitals, as shown here.<a href="#section-5-1" class="pilcrow">¶<
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">TODO Security<a href="#section-6-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-1.1">
+          <p id="section-6-1.1.1">Spoofing: Malicious actors claiming IP ranges they don't own. Mitigate with
+FCrDNS<a href="#section-6-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-1.2">
+          <p id="section-6-1.2.1">DoS: Clients being tricked into polling the JSON file too frequently.
+Mitigate by setting a reasonable polling limit, rely on caching (add 9110)<a href="#section-6-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-1.3">
+          <p id="section-6-1.3.1">Data Integrity: The risk of the file being intercepted and modified. Mitigated
+by HTTPS, which you should mandate for the transport.<a href="#section-6-1.3.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1465,7 +1550,7 @@ appear in all capitals, as shown here.<a href="#section-5-1" class="pilcrow">¶<
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-7-1">This document has no IANA actions.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">This document has no IANA actions. (It does but need to flesh it out)<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">
@@ -1474,6 +1559,18 @@ appear in all capitals, as shown here.<a href="#section-5-1" class="pilcrow">¶<
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="CIDR">[CIDR]</dt>
+      <dd>
+<span class="refAuthor">Fuller, V.</span> and <span class="refAuthor">T. Li</span>, <span class="refTitle">"Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan"</span>, <span class="seriesInfo">BCP 122</span>, <span class="seriesInfo">RFC 4632</span>, <span class="seriesInfo">DOI 10.17487/RFC4632</span>, <time datetime="2006-08" class="refDate">August 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4632">https://www.rfc-editor.org/rfc/rfc4632</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IPV6">[IPV6]</dt>
+      <dd>
+<span class="refAuthor">Hinden, R.</span> and <span class="refAuthor">S. Deering</span>, <span class="refTitle">"IP Version 6 Addressing Architecture"</span>, <span class="seriesInfo">RFC 4291</span>, <span class="seriesInfo">DOI 10.17487/RFC4291</span>, <time datetime="2006-02" class="refDate">February 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4291">https://www.rfc-editor.org/rfc/rfc4291</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="JSON">[JSON]</dt>
+      <dd>
+<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
       <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>

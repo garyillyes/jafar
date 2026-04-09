@@ -2,10 +2,10 @@
 
 
 
-AI Preferences                                                 G. Illyes
+Network Working Group                                          G. Illyes
 Internet-Draft                                               Independent
-Intended status: Informational                         30 September 2025
-Expires: 3 April 2026
+Intended status: Informational                              9 April 2026
+Expires: 11 October 2026
 
 
  A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 April 2026.
+   This Internet-Draft will expire on 11 October 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -322,13 +322,37 @@ Table of Contents
 
 6.  Security Considerations
 
-   TODO Security
+   *  Spoofing: Malicious actors claiming IP ranges they don't own.
+      Mitigate with FCrDNS
+
+   *  DoS: Clients being tricked into polling the JSON file too
+      frequently.  Mitigate by setting a reasonable polling limit, rely
+      on caching (add 9110)
+
+   *  Data Integrity: The risk of the file being intercepted and
+      modified.  Mitigated by HTTPS, which you should mandate for the
+      transport.
 
 7.  IANA Considerations
 
-   This document has no IANA actions.
+   This document has no IANA actions.  (It does but need to flesh it
+   out)
 
 8.  Normative References
+
+   [CIDR]     Fuller, V. and T. Li, "Classless Inter-domain Routing
+              (CIDR): The Internet Address Assignment and Aggregation
+              Plan", BCP 122, RFC 4632, DOI 10.17487/RFC4632, August
+              2006, <https://www.rfc-editor.org/rfc/rfc4632>.
+
+   [IPV6]     Hinden, R. and S. Deering, "IP Version 6 Addressing
+              Architecture", RFC 4291, DOI 10.17487/RFC4291, February
+              2006, <https://www.rfc-editor.org/rfc/rfc4291>.
+
+   [JSON]     Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", STD 90, RFC 8259,
+              DOI 10.17487/RFC8259, December 2017,
+              <https://www.rfc-editor.org/rfc/rfc8259>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
