@@ -4,12 +4,12 @@ abbrev: "JAFAR"
 category: info
 
 docname: draft-illyes-aipref-jafar-latest
-submissiontype: independent  # also: "IETF", "editorial", "IAB", or "IRTF"
+submissiontype: independent
 number:
 date:
-v: 3
-area: "Web and Internet Transport"
-workgroup: "AI Preferences"
+v: 4
+# area: AREA
+# workgroup: WG Working Group
 keyword:
  - next generation
  - sparkling distributed ledger
@@ -22,6 +22,9 @@ author:
     email: synack@garyillyes.com
 
 normative:
+   IPV6: rfc4291
+   CIDR: rfc4632
+   JSON: rfc8259
 
 informative:
 
@@ -29,22 +32,40 @@ informative:
 
 --- abstract
 
-This document defines a standardized JSON format for automated HTTP client (e.g., web crawlers, AI bots) operators to disclose their IP address ranges publicly. A consistent, machine-readable format for IP range publication simplifies the task of identifying and verifying legitimate automated traffic, thereby decreasing maintenance load on website operators while reducing the risk of inadvertently blocking beneficial clients. This specification codifies and extends common existing practices to provide a simple yet extensible format that accommodates a variety of use cases.
+This document defines a standardized JSON format for automated HTTP client
+(e.g., web crawlers, AI bots) operators to disclose their IP address ranges
+publicly. A consistent, machine-readable format for IP range publication
+simplifies the task of identifying and verifying legitimate automated traffic,
+thereby decreasing maintenance load on website operators while reducing the risk
+of inadvertently blocking beneficial clients. This specification codifies and
+extends common existing practices to provide a simple yet extensible format that
+accommodates a variety of use cases.
 
 
 --- middle
 
 # Introduction
 
-This document specifies a data format using the JavaScript Object Notation (JSON). It is intended for the publication of IP address ranges associated with automated HTTP clients.
-The scope of this specification is limited to the syntax and semantics of the JSON file itself. It does not specify the transport mechanism for retrieving the file. It also does not prescribe specific policies for how consumers should use the data (e.g., allowlisting, rate-limiting, or monitoring).
-This format is intended to complement, not replace, other established methods for crawler verification. Techniques such as forward-confirmed reverse DNS (FCrDNS) lookups remain a vital part of a comprehensive verification strategy. This specification provides a scalable, machine-readable component that can be integrated into a multi-layered verification process.
+This document specifies a data format using the JavaScript Object Notation
+(JSON). It is intended for the publication of IP address ranges associated with
+automated HTTP clients.
+The scope of this specification is limited to the syntax and semantics of the
+JSON file itself. It does not specify the transport mechanism for retrieving the
+file. It also does not prescribe specific policies for how consumers should use
+the data (e.g., allowlisting, rate-limiting, or monitoring).
+This format is intended to complement, not replace, other established methods
+for crawler verification. Techniques such as forward-confirmed reverse DNS
+(FCrDNS) lookups remain a vital part of a comprehensive verification strategy.
+This specification provides a scalable, machine-readable component that can be
+integrated into a multi-layered verification process.
 
 # Format
 
 ## Top-Level Object Definition
 
-An IP range publication file MUST be a single JSON object. The text encoding of the file MUST be UTF-8. This top-level object serves as the root container for essential metadata and the list of IP prefixes.
+An IP range publication file MUST be a single JSON object. The text encoding of
+the file MUST be UTF-8. This top-level object serves as the root container for
+essential metadata and the list of IP prefixes.
 
 The top-level object contains the fields defined in Table 1.
 
@@ -60,16 +81,21 @@ The top-level object contains the fields defined in Table 1.
 
 ## The prefixes Array
 
-The prefixes member of the top-level object MUST contain an array of JSON objects. Each of these objects is a Prefix Object, as defined in Section 2.3.
+The prefixes member of the top-level object MUST contain an array of JSON
+objects. Each of these objects is a Prefix Object, as defined in Section 2.3.
 
-To simplify implementation for consumers, there MUST be a single, unified array for both IPv4 and IPv6 prefixes.
+To simplify implementation for consumers, there MUST be a single, unified array
+for both IPv4 and IPv6 prefixes.
 
 
 ## The Prefix Object
 
-Each object within the prefixes array represents a single IP address range and its associated metadata.
+Each object within the prefixes array represents a single IP address range and
+its associated metadata.
 
-A Prefix Object MUST contain exactly one of either the ipv4Prefix field or the ipv6Prefix field. An object containing both or neither of these fields is invalid and MUST be ignored by consumers. The fields are defined in Table 2.
+A Prefix Object MUST contain exactly one of either the ipv4Prefix field or the
+ipv6Prefix field. An object containing both or neither of these fields is
+invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 
 | Field Name | Type | Requirement | Description |
 |---|---|---|---|
@@ -84,28 +110,59 @@ A Prefix Object MUST contain exactly one of either the ipv4Prefix field or the i
 
 ## Fetching and Caching
 
-Consumers SHOULD fetch the IP range publication file from a stable URL provided by the publisher in a machine readable format. The file location MUST be disclosed by the publisher of the file in the page that describes the crawler.
+Consumers SHOULD fetch the IP range publication file from a stable URL provided
+by the publisher in a machine readable format. The file location MUST be
+disclosed by the publisher of the file in the page that describes the crawler.
 
-Publishers SHOULD update the file when there's any change to the prefixes or every 24 hours, even if the only update is to `creationTime`. Consumers SHOULD implement a polling mechanism to check for updates at a reasonable interval, such as once every 24 hours. Consumers MUST NOT poll more frequently than once per hour unless explicitly permitted by the publisher's documentation or HTTP caching headers.
+Publishers SHOULD update the file when there's any change to the prefixes or
+every 24 hours, even if the only update is to `creationTime`. Consumers SHOULD
+implement a polling mechanism to check for updates at a reasonable interval,
+such as once every 24 hours. Consumers MUST NOT poll more frequently than once
+per hour unless explicitly permitted by the publisher's documentation or HTTP
+caching headers.
 
-To minimize server load for the publisher and reduce unnecessary bandwidth usage for the consumer, consumers MUST respect standard HTTP caching headers that may be present in the response, such as Cache-Control, ETag, and Last-Modified. Publishers SHOULD provide these headers to facilitate efficient caching.
+To minimize server load for the publisher and reduce unnecessary bandwidth usage
+for the consumer, consumers MUST respect standard HTTP caching headers that may
+be present in the response, such as Cache-Control, ETag, and Last-Modified.
+Publishers SHOULD provide these headers to facilitate efficient caching.
 
 
 ## Handling Format Versioning
 
-To ensure long-term stability and allow for future evolution of this specification, consumers MUST inspect the formatVersion field in the top-level object of the file. The version is expressed as "major.minor".
+To ensure long-term stability and allow for future evolution of this
+specification, consumers MUST inspect the formatVersion field in the top-level
+object of the file. The version is expressed as "major.minor".
 
 
 
-*  Major Version Changes: A change in the major version number (e.g., from "1.0" to "2.0") indicates a non-backwards compatible change to the specification. If a consumer encounters a file with a major version number greater than the major version it is programmed to handle, the consumer MUST NOT attempt to parse the file. It SHOULD treat this situation as an error and MAY continue to use its last known valid list until it can be updated to support the new version. This prevents the misinterpretation of data from a significantly altered schema.
-*  Minor Version Changes: A change in the minor version number (e.g., from "1.0" to "1.1") indicates the addition of new features or fields that are backward-compatible. For example, a new OPTIONAL field might be added to the Prefix Object. A consumer programmed to handle version "1.0" MUST be able to correctly parse a file with version "1.1". The minor version number increases numerically independently of the major version number, for instance: 1.9 -> 1.10 -> 1.11. The consumer MUST ignore any unrecognized fields or properties within the JSON objects.
+*  Major Version Changes: A change in the major version number (e.g., from "1.0"
+to "2.0") indicates a non-backwards compatible change to the specification. If a
+consumer encounters a file with a major version number greater than the major
+version it is programmed to handle, the consumer MUST NOT attempt to parse the
+file. It SHOULD treat this situation as an error and MAY continue to use its
+last known valid list until it can be updated to support the new version. This
+prevents the misinterpretation of data from a significantly altered schema.
+*  Minor Version Changes: A change in the minor version number (e.g., from "1.0"
+to "1.1") indicates the addition of new features or fields that are
+backward-compatible. For example, a new OPTIONAL field might be added to the
+Prefix Object. A consumer programmed to handle version "1.0" MUST be able to
+correctly parse a file with version "1.1". The minor version number increases
+numerically independently of the major version number,
+for instance: 1.9 -> 1.10 -> 1.11. The consumer MUST ignore any unrecognized
+fields or properties within the JSON objects.
 
 
 ## Prefix Aggregation and Specificity
 
-A publication file MAY contain overlapping IP address ranges. For instance, a publisher might list a broad range like 198.51.100.0/22 with a generic service tag, and also list a more specific range within it, such as 198.51.100.0/24, with a more specific service tag.
+A publication file MAY contain overlapping IP address ranges. For instance, a
+publisher might list a broad range like 198.51.100.0/22 with a generic service
+tag, and also list a more specific range within it, such as 198.51.100.0/24,
+with a more specific service tag.
 
-When a consumer evaluates a specific IP address against the list, it MAY match multiple Prefix Objects. In such cases, the consumer's logic SHOULD use the data from the Prefix Object with the most specific CIDR range (i.e., the one with the largest prefix length) for that IP address.
+When a consumer evaluates a specific IP address against the list, it MAY match
+multiple Prefix Objects. In such cases, the consumer's logic SHOULD use the data
+from the Prefix Object with the most specific CIDR range (i.e., the one with the
+largest prefix length) for that IP address.
 
 
 # Use Cases and Examples
@@ -113,7 +170,9 @@ When a consumer evaluates a specific IP address against the list, it MAY match m
 
 ## Example 1: Basic Publication
 
-This example demonstrates a minimal, valid file for a publisher with a single type of automated client. It uses only the required fields, making it simple to generate and consume.
+This example demonstrates a minimal, valid file for a publisher with a single
+type of automated client. It uses only the required fields, making it simple to
+generate and consume.
 
 
 ```
@@ -138,7 +197,11 @@ This example demonstrates a minimal, valid file for a publisher with a single ty
 
 ## Example 2: Advanced Publication with Multiple Services
 
-This example illustrates a more complex file from a large cloud provider that uses optional fields to provide richer context. It differentiates between IP ranges used for a general web crawler, a specialized ads crawler, and a user-triggered fetching service. This allows consumers to implement more granular access policies.
+This example illustrates a more complex file from a large cloud provider that
+uses optional fields to provide richer context. It differentiates between IP
+ranges used for a general web crawler, a specialized ads crawler, and a
+user-triggered fetching service. This allows consumers to implement more
+granular access policies.
 
 
 ```
@@ -154,7 +217,11 @@ This example illustrates a more complex file from a large cloud provider that us
 
 ## Example 3: Aggregated Publication by a Third Party
 
-This example shows how a third-party security provider or an open-source project could aggregate IP lists from multiple publishers into a single file. The service field is used to attribute each prefix to its original source, allowing consumers to apply policies based on the original publisher. This reflects the use case of services that provide curated lists of known bots.
+This example shows how a third-party security provider or an open-source project
+could aggregate IP lists from multiple publishers into a single file. The
+service field is used to attribute each prefix to its original source, allowing
+consumers to apply policies based on the original publisher. This reflects the
+use case of services that provide curated lists of known bots.
 
 
 ```
@@ -174,12 +241,17 @@ This example shows how a third-party security provider or an open-source project
 
 # Security Considerations
 
-TODO Security
+* Spoofing: Malicious actors claiming IP ranges they don't own. Mitigate with
+FCrDNS
+* DoS: Clients being tricked into polling the JSON file too frequently.
+Mitigate by setting a reasonable polling limit, rely on caching (add 9110)
+* Data Integrity: The risk of the file being intercepted and modified. Mitigated
+by HTTPS, which you should mandate for the transport.
 
 
 # IANA Considerations
 
-This document has no IANA actions.
+This document has no IANA actions. (It does but need to flesh it out)
 
 
 --- back
