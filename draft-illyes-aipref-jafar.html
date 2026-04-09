@@ -7,9 +7,9 @@
 <title>A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients</title>
 <meta content="Gary Illyes" name="author">
 <meta content="
-       This document defines a standardized JSON format for automated HTTP client
-(e.g., web crawlers, AI bots) operators to disclose their IP address ranges
-publicly. A consistent, machine-readable format for IP range publication
+       This document defines a standardized JSON format for operators of automated HTTP
+clients (e.g., web crawlers, AI bots) to publicly disclose their IP address
+ranges. A consistent, machine-readable format for IP range publication
 simplifies the task of identifying and verifying legitimate automated traffic,
 thereby decreasing maintenance load on website operators while reducing the risk
 of inadvertently blocking beneficial clients. This specification codifies and
@@ -1088,9 +1088,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines a standardized JSON format for automated HTTP client
-(e.g., web crawlers, AI bots) operators to disclose their IP address ranges
-publicly. A consistent, machine-readable format for IP range publication
+<p id="section-abstract-1">This document defines a standardized JSON format for operators of automated HTTP
+clients (e.g., web crawlers, AI bots) to publicly disclose their IP address
+ranges. A consistent, machine-readable format for IP range publication
 simplifies the task of identifying and verifying legitimate automated traffic,
 thereby decreasing maintenance load on website operators while reducing the risk
 of inadvertently blocking beneficial clients. This specification codifies and
@@ -1225,8 +1225,8 @@ accommodates a variety of use cases.<a href="#section-abstract-1" class="pilcrow
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">This document specifies a data format using the JavaScript Object Notation
-(JSON). It is intended for the publication of IP address ranges associated with
+<p id="section-1-1">This document specifies a data format using JavaScript Object Notation (JSON).
+It is intended for the publication of IP address ranges associated with
 automated HTTP clients.
 The scope of this specification is limited to the syntax and semantics of the
 JSON file itself. It does not specify the transport mechanism for retrieving the
@@ -1358,7 +1358,7 @@ invalid and <span class="bcp14">MUST</span> be ignored by consumers. The fields 
               <td class="text-left" rowspan="1" colspan="1">
                 <span class="bcp14">OPTIONAL</span>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples could include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies.</td>
+              <td class="text-left" rowspan="1" colspan="1">A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies.</td>
             </tr>
           </tbody>
         </table>
@@ -1376,15 +1376,15 @@ invalid and <span class="bcp14">MUST</span> be ignored by consumers. The fields 
         <h3 id="name-fetching-and-caching">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-fetching-and-caching" class="section-name selfRef">Fetching and Caching</a>
         </h3>
-<p id="section-3.1-1">Consumers <span class="bcp14">SHOULD</span> fetch the IP range publication file from a stable URL provided
-by the publisher in a machine readable format. The file location <span class="bcp14">MUST</span> be
-disclosed by the publisher of the file in the page that describes the crawler.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">Publishers <span class="bcp14">SHOULD</span> update the file when there's any change to the prefixes or
-every 24 hours, even if the only update is to <code>creationTime</code>. Consumers <span class="bcp14">SHOULD</span>
-implement a polling mechanism to check for updates at a reasonable interval,
-such as once every 24 hours. Consumers <span class="bcp14">MUST NOT</span> poll more frequently than once
-per hour unless explicitly permitted by the publisher's documentation or HTTP
-caching headers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Consumers <span class="bcp14">SHOULD</span> fetch the machine-readable IP range publication file from a
+stable URL provided by the publisher. The file location <span class="bcp14">MUST</span> be disclosed by the
+publisher of the file on the page that describes the crawler.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Publishers <span class="bcp14">SHOULD</span> update the file when there is any change to the prefixes, or
+at least every 24 hours, even if the only update is to <code>creationTime</code>. Consumers
+<span class="bcp14">SHOULD</span> implement a polling mechanism to check for updates at a reasonable
+interval, such as once every 24 hours. Consumers <span class="bcp14">MUST NOT</span> poll more frequently
+than once per hour unless explicitly permitted by the publisher's documentation
+or HTTP caching headers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">To minimize server load for the publisher and reduce unnecessary bandwidth usage
 for the consumer, consumers <span class="bcp14">MUST</span> respect standard HTTP caching headers that may
 be present in the response, such as Cache-Control, ETag, and Last-Modified.
@@ -1402,7 +1402,7 @@ object of the file. The version is expressed as "major.minor".<a href="#section-
 <ul class="normal">
 <li class="normal" id="section-3.2-2.1">
             <p id="section-3.2-2.1.1">Major Version Changes: A change in the major version number (e.g., from "1.0"
-to "2.0") indicates a non-backwards compatible change to the specification. If a
+to "2.0") indicates a non-backward-compatible change to the specification. If a
 consumer encounters a file with a major version number greater than the major
 version it is programmed to handle, the consumer <span class="bcp14">MUST NOT</span> attempt to parse the
 file. It <span class="bcp14">SHOULD</span> treat this situation as an error and <span class="bcp14">MAY</span> continue to use its
@@ -1540,7 +1540,7 @@ Mitigate by setting a reasonable polling limit, rely on caching (add 9110)<a hre
 </li>
         <li class="normal" id="section-6-1.3">
           <p id="section-6-1.3.1">Data Integrity: The risk of the file being intercepted and modified. Mitigated
-by HTTPS, which you should mandate for the transport.<a href="#section-6-1.3.1" class="pilcrow">¶</a></p>
+by HTTPS, which should be mandated for the transport.<a href="#section-6-1.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
