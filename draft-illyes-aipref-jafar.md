@@ -32,9 +32,9 @@ informative:
 
 --- abstract
 
-This document defines a standardized JSON format for automated HTTP client
-(e.g., web crawlers, AI bots) operators to disclose their IP address ranges
-publicly. A consistent, machine-readable format for IP range publication
+This document defines a standardized JSON format for operators of automated HTTP
+clients (e.g., web crawlers, AI bots) to publicly disclose their IP address
+ranges. A consistent, machine-readable format for IP range publication
 simplifies the task of identifying and verifying legitimate automated traffic,
 thereby decreasing maintenance load on website operators while reducing the risk
 of inadvertently blocking beneficial clients. This specification codifies and
@@ -46,8 +46,8 @@ accommodates a variety of use cases.
 
 # Introduction
 
-This document specifies a data format using the JavaScript Object Notation
-(JSON). It is intended for the publication of IP address ranges associated with
+This document specifies a data format using JavaScript Object Notation (JSON).
+It is intended for the publication of IP address ranges associated with
 automated HTTP clients.
 The scope of this specification is limited to the syntax and semantics of the
 JSON file itself. It does not specify the transport mechanism for retrieving the
@@ -101,7 +101,7 @@ invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 |---|---|---|---|
 | ipv4Prefix | String | CONDITIONAL | The IPv4 address range in Classless Inter-Domain Routing (CIDR) notation (e.g., "66.249.64.0/20"). This field MUST be present if the ipv6Prefix field is absent. |
 | ipv6Prefix | String | CONDITIONAL | The IPv6 address range in CIDR notation (e.g., "2001:4860:4000::/36"). This field MUST be present if the ipv4Prefix field is absent. |
-| service | String | OPTIONAL | A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples could include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies. |
+| service | String | OPTIONAL | A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies. |
 
 
 
@@ -110,16 +110,16 @@ invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 
 ## Fetching and Caching
 
-Consumers SHOULD fetch the IP range publication file from a stable URL provided
-by the publisher in a machine readable format. The file location MUST be
-disclosed by the publisher of the file in the page that describes the crawler.
+Consumers SHOULD fetch the machine-readable IP range publication file from a
+stable URL provided by the publisher. The file location MUST be disclosed by the
+publisher of the file on the page that describes the crawler.
 
-Publishers SHOULD update the file when there's any change to the prefixes or
-every 24 hours, even if the only update is to `creationTime`. Consumers SHOULD
-implement a polling mechanism to check for updates at a reasonable interval,
-such as once every 24 hours. Consumers MUST NOT poll more frequently than once
-per hour unless explicitly permitted by the publisher's documentation or HTTP
-caching headers.
+Publishers SHOULD update the file when there is any change to the prefixes, or
+at least every 24 hours, even if the only update is to `creationTime`. Consumers
+SHOULD implement a polling mechanism to check for updates at a reasonable
+interval, such as once every 24 hours. Consumers MUST NOT poll more frequently
+than once per hour unless explicitly permitted by the publisher's documentation
+or HTTP caching headers.
 
 To minimize server load for the publisher and reduce unnecessary bandwidth usage
 for the consumer, consumers MUST respect standard HTTP caching headers that may
@@ -134,9 +134,8 @@ specification, consumers MUST inspect the formatVersion field in the top-level
 object of the file. The version is expressed as "major.minor".
 
 
-
 *  Major Version Changes: A change in the major version number (e.g., from "1.0"
-to "2.0") indicates a non-backwards compatible change to the specification. If a
+to "2.0") indicates a non-backward-compatible change to the specification. If a
 consumer encounters a file with a major version number greater than the major
 version it is programmed to handle, the consumer MUST NOT attempt to parse the
 file. It SHOULD treat this situation as an error and MAY continue to use its
@@ -246,7 +245,7 @@ FCrDNS
 * DoS: Clients being tricked into polling the JSON file too frequently.
 Mitigate by setting a reasonable polling limit, rely on caching (add 9110)
 * Data Integrity: The risk of the file being intercepted and modified. Mitigated
-by HTTPS, which you should mandate for the transport.
+by HTTPS, which should be mandated for the transport.
 
 
 # IANA Considerations
