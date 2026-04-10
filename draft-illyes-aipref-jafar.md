@@ -48,9 +48,9 @@ accommodates a variety of use cases.
 
 # Introduction
 
-This document specifies a data format using JavaScript Object Notation ({{JSON}}).
-It is intended for the publication of IP address ranges associated with
-automated HTTP clients.
+This document specifies a data format using JavaScript Object Notation
+({{JSON}}). It is intended for the publication of IP address ranges associated
+with automated HTTP clients.
 The scope of this specification is limited to the syntax and semantics of the
 JSON file itself. It does not specify the transport mechanism for retrieving the
 file. It also does not prescribe specific policies for how consumers should use
@@ -274,7 +274,7 @@ registry:
 * Optional parameters:
     * version: The version of the JAFAR specification the file conforms to
     (e.g., "1.0"). If absent, it defaults to the latest stable version supported
-    by the consumer. 
+    by the consumer.
 * Encoding considerations: binary
 * Security considerations: See [Section 6](#security-considerations)
 * Interoperability considerations: N/A
