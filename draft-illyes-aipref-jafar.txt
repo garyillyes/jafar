@@ -111,19 +111,43 @@ Table of Contents
 
    The top-level object contains the fields defined in Table 1.
 
-   | Field Name | Type | Requirement |
-   Description | |---|---|---|---| |synctoken|String|MUST|An opaque
-   synchronization token that changes whenever there is a change to any
-   metadata associated with one or more
-   prefixes.| |creationTime|String|MUST|An ISO 8601 timestamp in the "Z"
-   timezone (UTC) indicating when the file was generated (e.g.,
-   "2025-08-15T14:30:00Z").| |notes|String|OPTIONAL|A human-readable
-   string containing any relevant notes, disclaimers, or comments from
-   the publisher.  This can be used to provide context that is not
-   captured by the structured data.| |prefixes|Array|MUST|An array of
-   Prefix Objects, as defined in Section 2.3.  Each object in the array
-   describes an IPv4 or IPv6 address range.  This array MAY be empty if
-   the publisher currently has no active IP ranges to declare.|
+    +==============+========+=============+===========================+
+    | Field Name   | Type   | Requirement | Description               |
+    +==============+========+=============+===========================+
+    | synctoken    | String | MUST        | An opaque synchronization |
+    |              |        |             | token that changes        |
+    |              |        |             | whenever there is a       |
+    |              |        |             | change to any metadata    |
+    |              |        |             | associated with one or    |
+    |              |        |             | more prefixes.            |
+    +--------------+--------+-------------+---------------------------+
+    | creationTime | String | MUST        | An ISO 8601 timestamp in  |
+    |              |        |             | the "Z" timezone (UTC)    |
+    |              |        |             | indicating when the file  |
+    |              |        |             | was generated (e.g.,      |
+    |              |        |             | "2025-08-15T14:30:00Z").  |
+    +--------------+--------+-------------+---------------------------+
+    | notes        | String | OPTIONAL    | A human-readable string   |
+    |              |        |             | containing any relevant   |
+    |              |        |             | notes, disclaimers, or    |
+    |              |        |             | comments from the         |
+    |              |        |             | publisher.  This can be   |
+    |              |        |             | used to provide context   |
+    |              |        |             | that is not captured by   |
+    |              |        |             | the structured data.      |
+    +--------------+--------+-------------+---------------------------+
+    | prefixes     | Array  | MUST        | An array of Prefix        |
+    |              |        |             | Objects, as defined in    |
+    |              |        |             | Section 2.3.  Each object |
+    |              |        |             | in the array describes an |
+    |              |        |             | IPv4 or IPv6 address      |
+    |              |        |             | range.  This array MAY be |
+    |              |        |             | empty if the publisher    |
+    |              |        |             | currently has no active   |
+    |              |        |             | IP ranges to declare.     |
+    +--------------+--------+-------------+---------------------------+
+
+                                  Table 1
 
 2.2.  The prefixes Array
 
@@ -144,18 +168,36 @@ Table of Contents
    fields is invalid and MUST be ignored by consumers.  The fields are
    defined in Table 2.
 
-   | Field Name | Type | Requirement |
-   Description | |---|---|---|---| |ipv4Prefix| String | CONDITIONAL |
-   The IPv4 address range in Classless Inter-Domain Routing ([CIDR])
-   notation (e.g., "66.249.64.0/20").  This field MUST be present if the
-   ipv6Prefix field is absent. | |ipv6Prefix| String | CONDITIONAL | The
-   IPv6 address range in CIDR notation (e.g., "2001:4860:4000::/36").
-   This field MUST be present if the ipv4Prefix field is
-   absent. | |service| String | OPTIONAL | A publisher-defined, case-
-   sensitive string that identifies the specific service, bot, or
-   purpose associated with this prefix.  Examples include "Bingbot",
-   "AdsBot-Google".  This allows consumers to apply more granular
-   policies. |
+   +============+========+=============+==============================+
+   | Field Name | Type   | Requirement | Description                  |
+   +============+========+=============+==============================+
+   | ipv4Prefix | String | CONDITIONAL | The IPv4 address range in    |
+   |            |        |             | Classless Inter-Domain       |
+   |            |        |             | Routing ([CIDR]) notation    |
+   |            |        |             | (e.g., "66.249.64.0/20").    |
+   |            |        |             | This field MUST be present   |
+   |            |        |             | if the ipv6Prefix field is   |
+   |            |        |             | absent.                      |
+   +------------+--------+-------------+------------------------------+
+   | ipv6Prefix | String | CONDITIONAL | The IPv6 address range in    |
+   |            |        |             | CIDR notation (e.g.,         |
+   |            |        |             | "2001:4860:4000::/36").      |
+   |            |        |             | This field MUST be present   |
+   |            |        |             | if the ipv4Prefix field is   |
+   |            |        |             | absent.                      |
+   +------------+--------+-------------+------------------------------+
+   | service    | String | OPTIONAL    | A publisher-defined, case-   |
+   |            |        |             | sensitive string that        |
+   |            |        |             | identifies the specific      |
+   |            |        |             | service, bot, or purpose     |
+   |            |        |             | associated with this prefix. |
+   |            |        |             | Examples include "Bingbot",  |
+   |            |        |             | "AdsBot-Google".  This       |
+   |            |        |             | allows consumers to apply    |
+   |            |        |             | more granular policies.      |
+   +------------+--------+-------------+------------------------------+
+
+                                 Table 2
 
 3.  Processing and Consumption Rules
 
