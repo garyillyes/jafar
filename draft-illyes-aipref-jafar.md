@@ -73,7 +73,7 @@ The top-level object contains the fields defined in Table 1.
 
 | Field Name | Type | Requirement | Description |
 |---|---|---|---|
-|`synctoken`|String|MUST|An opaque synchronization token that changes whenever there is a change to any metadata associated with one or more prefixes.|
+|`synctoken`|String|OPTIONAL|An opaque synchronization token that changes whenever there is a change to any metadata associated with one or more prefixes.|
 |`creationTime`|String|MUST|An ISO 8601 timestamp in the "Z" timezone (UTC) indicating when the file was generated (e.g., "`2025-08-15T14:30:00Z`").|
 |`notes`|String|OPTIONAL|A human-readable string containing any relevant notes, disclaimers, or comments from the publisher. This can be used to provide context that is not captured by the structured data.|
 |`prefixes`|Array|MUST|An array of Prefix Objects, as defined in Section 2.3. Each object in the array describes an IPv4 or IPv6 address range. This array MAY be empty if the publisher currently has no active IP ranges to declare.|
@@ -123,7 +123,7 @@ or HTTP caching headers.
 
 To minimize server load for the publisher and reduce unnecessary bandwidth usage
 for the consumer, consumers MUST respect standard HTTP caching headers specified
-in {{HTTP-CACHING} }that may be present in the response, such as
+in {{HTTP-CACHING}} that may be present in the response, such as
 `Cache-Control`, `ETag`, and `Last-Modified`. Publishers SHOULD provide these
 headers to facilitate efficient caching.
 
@@ -161,7 +161,7 @@ stable version of this specification they are programmed to handle.
 A publication file MAY contain overlapping IP address ranges. For instance, a
 publisher might list a broad range like `198.51.100.0/22` with a generic service
 tag, and also list a more specific range within it, such as `198.51.100.0/24`,
-with a more specific service tag.
+with a more specific `service` tag.
 
 When a consumer evaluates a specific IP address against the list, it MAY match
 multiple Prefix Objects. In such cases, the consumer's logic SHOULD use the data
