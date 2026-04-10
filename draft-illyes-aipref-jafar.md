@@ -101,7 +101,7 @@ invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 |---|---|---|---|
 |`ipv4Prefix`| String | CONDITIONAL | The IPv4 address range in Classless Inter-Domain Routing ({{CIDR}}) notation (e.g., "`66.249.64.0/20`"). This field MUST be present if the `ipv6Prefix` field is absent. |
 |`ipv6Prefix`| String | CONDITIONAL | The IPv6 address range in CIDR notation (e.g., "`2001:4860:4000::/36`"). This field MUST be present if the `ipv4Prefix` field is absent. |
-|`service`| String | OPTIONAL | A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies. |
+|`services`| Array | OPTIONAL | An array of publisher-defined, case-sensitive strings identifying the services associated with this prefix. For example ["Examplebot", "AdsBot-Example"]. This allows consumers to apply more granular policies. |
 
 
 # Processing and Consumption Rules
@@ -179,7 +179,7 @@ type of automated client. It uses only the required fields, making it simple to
 generate and consume.
 
 
-```
+~~~
 {
   "creationTime": "2025-08-15T14:30:00Z",
   "prefixes": [
@@ -194,8 +194,7 @@ generate and consume.
     }
   ]
 }
-```
-
+~~~
 
 
 ## Example 2: Advanced Publication with Multiple Services
@@ -207,14 +206,21 @@ user-triggered fetching service. This allows consumers to implement more
 granular access policies.
 
 
-```
+~~~
 {
-  "creationTime": "2025-09-01T10:00:00Z",
-  "notes": "IP ranges for ExampleCloud services. For verification, FCrDNS is also recommended.",
-  "Prefixes": "FILL OUT WITH EXAMPLE"
+  "creationTime": "2025-08-15T14:30:00Z",
+  "prefixes": [
+    {
+      "ipv4Prefix": "66.249.64.0/24",
+      "services": ["ExampleCloud-Crawler", "ExampleCloud-Ads"]
+    },
+    {
+      "ipv6Prefix": "2001:4860:4860::/48",
+      "services": ["ExampleCloud-Fetcher"]
+    }
+  ]
 }
-```
-
+~~~
 
 
 ## Example 3: Aggregated Publication by a Third Party
@@ -226,13 +232,35 @@ consumers to apply policies based on the original publisher. This reflects the
 use case of services that provide curated lists of known bots.
 
 
-```
+~~~
 {
-  "creationTime": "2025-09-02T00:00:00Z",
-  "notes": "Aggregated list of known good bots. Data is updated daily from original publisher sources.",
-  "Prefixes": FILL OUT WITH EXAMPLE
+  "synctoken": "20260410223000",
+  "creationTime": "2026-04-10T22:30:00Z",
+  "notes": "Aggregated feed of verified automated clients. Attribution is maintained via the services array. Data refreshed every 24 hours.",
+  "prefixes": [
+    {
+      "ipv4Prefix": "192.0.2.0/24",
+      "services": [
+        "SearchEngine-A-Crawler",
+        "SearchEngine-A-ImageBot"
+      ]
+    },
+    {
+      "ipv4Prefix": "198.51.100.0/24",
+      "services": [
+        "SocialMedia-B-Preview"
+      ]
+    },
+    {
+      "ipv6Prefix": "2001:db8:abc::/48",
+      "services": [
+        "TechCo-C-HealthCheck",
+        "TechCo-C-Ads"
+      ]
+    }
+  ]
 }
-```
+~~~
 
 
 # Conventions and Definitions
