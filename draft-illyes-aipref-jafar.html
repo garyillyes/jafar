@@ -1358,13 +1358,13 @@ invalid and <span class="bcp14">MUST</span> be ignored by consumers. The fields 
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">
-                <code>service</code>
+                <code>services</code>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">String</td>
+              <td class="text-left" rowspan="1" colspan="1">Array</td>
               <td class="text-left" rowspan="1" colspan="1">
                 <span class="bcp14">OPTIONAL</span>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies.</td>
+              <td class="text-left" rowspan="1" colspan="1">An array of publisher-defined, case-sensitive strings identifying the services associated with this prefix. For example ["Examplebot", "AdsBot-Example"]. This allows consumers to apply more granular policies.</td>
             </tr>
           </tbody>
         </table>
@@ -1464,7 +1464,8 @@ largest prefix length) for that IP address.<a href="#section-3.3-2" class="pilcr
 <p id="section-4.1-1">This example demonstrates a minimal, valid file for a publisher with a single
 type of automated client. It uses only the required fields, making it simple to
 generate and consume.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2"><code>
+<div class="alignLeft art-text artwork" id="section-4.1-2">
+<pre>
 {
   "creationTime": "2025-08-15T14:30:00Z",
   "prefixes": [
@@ -1479,7 +1480,8 @@ generate and consume.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
     }
   ]
 }
-</code><a href="#section-4.1-2" class="pilcrow">¶</a></p>
+</pre><a href="#section-4.1-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="example-2-advanced-publication-with-multiple-services">
@@ -1492,13 +1494,23 @@ uses optional fields to provide richer context. It differentiates between IP
 ranges used for a general web crawler, a specialized ads crawler, and a
 user-triggered fetching service. This allows consumers to implement more
 granular access policies.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2"><code>
+<div class="alignLeft art-text artwork" id="section-4.2-2">
+<pre>
 {
-  "creationTime": "2025-09-01T10:00:00Z",
-  "notes": "IP ranges for ExampleCloud services. For verification, FCrDNS is also recommended.",
-  "Prefixes": "FILL OUT WITH EXAMPLE"
+  "creationTime": "2025-08-15T14:30:00Z",
+  "prefixes": [
+    {
+      "ipv4Prefix": "66.249.64.0/24",
+      "services": ["ExampleCloud-Crawler", "ExampleCloud-Ads"]
+    },
+    {
+      "ipv6Prefix": "2001:4860:4860::/48",
+      "services": ["ExampleCloud-Fetcher"]
+    }
+  ]
 }
-</code><a href="#section-4.2-2" class="pilcrow">¶</a></p>
+</pre><a href="#section-4.2-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="example-3-aggregated-publication-by-a-third-party">
@@ -1511,13 +1523,37 @@ could aggregate IP lists from multiple publishers into a single file. The
 service field is used to attribute each prefix to its original source, allowing
 consumers to apply policies based on the original publisher. This reflects the
 use case of services that provide curated lists of known bots.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.3-2"><code>
+<div class="alignLeft art-text artwork" id="section-4.3-2">
+<pre>
 {
-  "creationTime": "2025-09-02T00:00:00Z",
-  "notes": "Aggregated list of known good bots. Data is updated daily from original publisher sources.",
-  "Prefixes": FILL OUT WITH EXAMPLE
+  "synctoken": "20260410223000",
+  "creationTime": "2026-04-10T22:30:00Z",
+  "notes": "Aggregated feed of verified automated clients. Attribution is maintained via the services array. Data refreshed every 24 hours.",
+  "prefixes": [
+    {
+      "ipv4Prefix": "192.0.2.0/24",
+      "services": [
+        "SearchEngine-A-Crawler",
+        "SearchEngine-A-ImageBot"
+      ]
+    },
+    {
+      "ipv4Prefix": "198.51.100.0/24",
+      "services": [
+        "SocialMedia-B-Preview"
+      ]
+    },
+    {
+      "ipv6Prefix": "2001:db8:abc::/48",
+      "services": [
+        "TechCo-C-HealthCheck",
+        "TechCo-C-Ads"
+      ]
+    }
+  ]
 }
-</code><a href="#section-4.3-2" class="pilcrow">¶</a></p>
+</pre><a href="#section-4.3-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 </section>
