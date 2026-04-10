@@ -114,7 +114,7 @@ Table of Contents
     +==============+========+=============+===========================+
     | Field Name   | Type   | Requirement | Description               |
     +==============+========+=============+===========================+
-    | synctoken    | String | MUST        | An opaque synchronization |
+    | synctoken    | String | OPTIONAL    | An opaque synchronization |
     |              |        |             | token that changes        |
     |              |        |             | whenever there is a       |
     |              |        |             | change to any metadata    |
@@ -218,7 +218,7 @@ Table of Contents
 
    To minimize server load for the publisher and reduce unnecessary
    bandwidth usage for the consumer, consumers MUST respect standard
-   HTTP caching headers specified in [HTTP-CACHING] }that may be present
+   HTTP caching headers specified in [HTTP-CACHING] that may be present
    in the response, such as Cache-Control, ETag, and Last-Modified.
    Publishers SHOULD provide these headers to facilitate efficient
    caching.

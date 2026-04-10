@@ -1270,7 +1270,7 @@ metadata relevant to the file and the list of IP prefixes.<a href="#section-2.1-
 </td>
               <td class="text-left" rowspan="1" colspan="1">String</td>
               <td class="text-left" rowspan="1" colspan="1">
-                <span class="bcp14">MUST</span>
+                <span class="bcp14">OPTIONAL</span>
 </td>
               <td class="text-left" rowspan="1" colspan="1">An opaque synchronization token that changes whenever there is a change to any metadata associated with one or more prefixes.</td>
             </tr>
@@ -1394,7 +1394,7 @@ than once per hour unless explicitly permitted by the publisher's documentation
 or HTTP caching headers.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">To minimize server load for the publisher and reduce unnecessary bandwidth usage
 for the consumer, consumers <span class="bcp14">MUST</span> respect standard HTTP caching headers specified
-in <span>[<a href="#HTTP-CACHING" class="cite xref">HTTP-CACHING</a>]</span> }that may be present in the response, such as
+in <span>[<a href="#HTTP-CACHING" class="cite xref">HTTP-CACHING</a>]</span> that may be present in the response, such as
 <code>Cache-Control</code>, <code>ETag</code>, and <code>Last-Modified</code>. Publishers <span class="bcp14">SHOULD</span> provide these
 headers to facilitate efficient caching.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
@@ -1442,7 +1442,7 @@ fields or properties within the JSON objects.<a href="#section-3.2-2.2.1" class=
 <p id="section-3.3-1">A publication file <span class="bcp14">MAY</span> contain overlapping IP address ranges. For instance, a
 publisher might list a broad range like <code>198.51.100.0/22</code> with a generic service
 tag, and also list a more specific range within it, such as <code>198.51.100.0/24</code>,
-with a more specific service tag.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+with a more specific <code>service</code> tag.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">When a consumer evaluates a specific IP address against the list, it <span class="bcp14">MAY</span> match
 multiple Prefix Objects. In such cases, the consumer's logic <span class="bcp14">SHOULD</span> use the data
 from the Prefix Object with the most specific CIDR range (i.e., the one with the
