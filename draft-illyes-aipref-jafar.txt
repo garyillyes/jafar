@@ -4,8 +4,8 @@
 
 Network Working Group                                          G. Illyes
 Internet-Draft                                               Independent
-Intended status: Informational                              9 April 2026
-Expires: 11 October 2026
+Intended status: Informational                             10 April 2026
+Expires: 12 October 2026
 
 
  A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 October 2026.
+   This Internet-Draft will expire on 12 October 2026.
 
 Copyright Notice
 
@@ -87,7 +87,7 @@ Table of Contents
 1.  Introduction
 
    This document specifies a data format using JavaScript Object
-   Notation (JSON).  It is intended for the publication of IP address
+   Notation ([JSON]).  It is intended for the publication of IP address
    ranges associated with automated HTTP clients.  The scope of this
    specification is limited to the syntax and semantics of the JSON file
    itself.  It does not specify the transport mechanism for retrieving
@@ -106,59 +106,24 @@ Table of Contents
 
    An IP range publication file MUST be a single JSON object.  The text
    encoding of the file MUST be UTF-8.  This top-level object serves as
-   the root container for essential metadata and the list of IP
-   prefixes.
+   the root container for metadata relevant to the file and the list of
+   IP prefixes.
 
    The top-level object contains the fields defined in Table 1.
 
-   +===============+========+=============+===========================+
-   | Field Name    | Type   | Requirement | Description               |
-   +===============+========+=============+===========================+
-   | formatVersion | String | MUST        | The version of this       |
-   |               |        |             | specification that the    |
-   |               |        |             | file conforms to,         |
-   |               |        |             | represented as a string   |
-   |               |        |             | in "major.minor" format   |
-   |               |        |             | (e.g., "1.0").  Consumers |
-   |               |        |             | MUST use this to handle   |
-   |               |        |             | potential future breaking |
-   |               |        |             | changes.  See Section 3.2 |
-   |               |        |             | for processing rules.     |
-   +---------------+--------+-------------+---------------------------+
-   | synctoken     | String | MUST        | An opaque synchronization |
-   |               |        |             | token that changes        |
-   |               |        |             | whenever there is a       |
-   |               |        |             | change to any metadata    |
-   |               |        |             | associated with one or    |
-   |               |        |             | more prefixes.            |
-   +---------------+--------+-------------+---------------------------+
-   | creationTime  | String | MUST        | An ISO 8601 timestamp in  |
-   |               |        |             | the "Z" timezone (UTC)    |
-   |               |        |             | indicating when the file  |
-   |               |        |             | was generated (e.g.,      |
-   |               |        |             | "2025-08-15T14:30:00Z").  |
-   +---------------+--------+-------------+---------------------------+
-   | notes         | String | OPTIONAL    | A human-readable string   |
-   |               |        |             | containing any relevant   |
-   |               |        |             | notes, disclaimers, or    |
-   |               |        |             | comments from the         |
-   |               |        |             | publisher.  This can be   |
-   |               |        |             | used to provide context   |
-   |               |        |             | that is not captured by   |
-   |               |        |             | the structured data.      |
-   +---------------+--------+-------------+---------------------------+
-   | prefixes      | Array  | MUST        | An array of Prefix        |
-   |               |        |             | Objects, as defined in    |
-   |               |        |             | Section 2.3.  Each object |
-   |               |        |             | in the array describes an |
-   |               |        |             | IPv4 or IPv6 address      |
-   |               |        |             | range.  This array MAY be |
-   |               |        |             | empty if the publisher    |
-   |               |        |             | currently has no active   |
-   |               |        |             | IP ranges to declare.     |
-   +---------------+--------+-------------+---------------------------+
-
-                                 Table 1
+   | Field Name | Type | Requirement |
+   Description | |---|---|---|---| |synctoken|String|MUST|An opaque
+   synchronization token that changes whenever there is a change to any
+   metadata associated with one or more
+   prefixes.| |creationTime|String|MUST|An ISO 8601 timestamp in the "Z"
+   timezone (UTC) indicating when the file was generated (e.g.,
+   "2025-08-15T14:30:00Z").| |notes|String|OPTIONAL|A human-readable
+   string containing any relevant notes, disclaimers, or comments from
+   the publisher.  This can be used to provide context that is not
+   captured by the structured data.| |prefixes|Array|MUST|An array of
+   Prefix Objects, as defined in Section 2.3.  Each object in the array
+   describes an IPv4 or IPv6 address range.  This array MAY be empty if
+   the publisher currently has no active IP ranges to declare.|
 
 2.2.  The prefixes Array
 
@@ -174,41 +139,23 @@ Table of Contents
    Each object within the prefixes array represents a single IP address
    range and its associated metadata.
 
-   A Prefix Object MUST contain exactly one of either the ipv4Prefix
-   field or the ipv6Prefix field.  An object containing both or neither
-   of these fields is invalid and MUST be ignored by consumers.  The
-   fields are defined in Table 2.
+   A Prefix Object MUST contain exactly one of either the ipv4Prefix or
+   ipv6Prefix field.  An object containing both or neither of these
+   fields is invalid and MUST be ignored by consumers.  The fields are
+   defined in Table 2.
 
-   +============+========+=============+==============================+
-   | Field Name | Type   | Requirement | Description                  |
-   +============+========+=============+==============================+
-   | ipv4Prefix | String | CONDITIONAL | The IPv4 address range in    |
-   |            |        |             | Classless Inter-Domain       |
-   |            |        |             | Routing (CIDR) notation      |
-   |            |        |             | (e.g., "66.249.64.0/20").    |
-   |            |        |             | This field MUST be present   |
-   |            |        |             | if the ipv6Prefix field is   |
-   |            |        |             | absent.                      |
-   +------------+--------+-------------+------------------------------+
-   | ipv6Prefix | String | CONDITIONAL | The IPv6 address range in    |
-   |            |        |             | CIDR notation (e.g.,         |
-   |            |        |             | "2001:4860:4000::/36").      |
-   |            |        |             | This field MUST be present   |
-   |            |        |             | if the ipv4Prefix field is   |
-   |            |        |             | absent.                      |
-   +------------+--------+-------------+------------------------------+
-   | service    | String | OPTIONAL    | A publisher-defined, case-   |
-   |            |        |             | sensitive string that        |
-   |            |        |             | identifies the specific      |
-   |            |        |             | service, bot, or purpose     |
-   |            |        |             | associated with this prefix. |
-   |            |        |             | Examples include "Bingbot",  |
-   |            |        |             | "AdsBot-Google".  This       |
-   |            |        |             | allows consumers to apply    |
-   |            |        |             | more granular policies.      |
-   +------------+--------+-------------+------------------------------+
-
-                                 Table 2
+   | Field Name | Type | Requirement |
+   Description | |---|---|---|---| |ipv4Prefix| String | CONDITIONAL |
+   The IPv4 address range in Classless Inter-Domain Routing ([CIDR])
+   notation (e.g., "66.249.64.0/20").  This field MUST be present if the
+   ipv6Prefix field is absent. | |ipv6Prefix| String | CONDITIONAL | The
+   IPv6 address range in CIDR notation (e.g., "2001:4860:4000::/36").
+   This field MUST be present if the ipv4Prefix field is
+   absent. | |service| String | OPTIONAL | A publisher-defined, case-
+   sensitive string that identifies the specific service, bot, or
+   purpose associated with this prefix.  Examples include "Bingbot",
+   "AdsBot-Google".  This allows consumers to apply more granular
+   policies. |
 
 3.  Processing and Consumption Rules
 
@@ -217,7 +164,7 @@ Table of Contents
    Consumers SHOULD fetch the machine-readable IP range publication file
    from a stable URL provided by the publisher.  The file location MUST
    be disclosed by the publisher of the file on the page that describes
-   the crawler.
+   the crawler as specified by [CBCP].
 
    Publishers SHOULD update the file when there is any change to the
    prefixes, or at least every 24 hours, even if the only update is to
@@ -229,26 +176,30 @@ Table of Contents
 
    To minimize server load for the publisher and reduce unnecessary
    bandwidth usage for the consumer, consumers MUST respect standard
-   HTTP caching headers that may be present in the response, such as
-   Cache-Control, ETag, and Last-Modified.  Publishers SHOULD provide
-   these headers to facilitate efficient caching.
+   HTTP caching headers specified in [HTTP-CACHING] }that may be present
+   in the response, such as Cache-Control, ETag, and Last-Modified.
+   Publishers SHOULD provide these headers to facilitate efficient
+   caching.
 
 3.2.  Handling Format Versioning
 
    To ensure long-term stability and allow for future evolution of this
-   specification, consumers MUST inspect the formatVersion field in the
-   top-level object of the file.  The version is expressed as
-   "major.minor".
+   specification, consumers MUST inspect the version optional parameter
+   of the application/jafar+json media type, as specified in the
+   Content-Type HTTP header.  The version is expressed as "major.minor".
+   If the version parameter is absent, consumers SHOULD assume the
+   latest stable version of this specification they are programmed to
+   handle.
 
    *  Major Version Changes: A change in the major version number (e.g.,
       from "1.0" to "2.0") indicates a non-backward-compatible change to
-      the specification.  If a consumer encounters a file with a major
-      version number greater than the major version it is programmed to
-      handle, the consumer MUST NOT attempt to parse the file.  It
-      SHOULD treat this situation as an error and MAY continue to use
-      its last known valid list until it can be updated to support the
-      new version.  This prevents the misinterpretation of data from a
-      significantly altered schema.
+      the specification.  If a consumer encounters a file advertised
+      with a major version number greater than the major version it is
+      programmed to handle, the consumer MUST NOT attempt to parse the
+      file.  It SHOULD treat this situation as an error and MAY continue
+      to use its last known valid list until it can be updated to
+      support the new version.  This prevents the misinterpretation of
+      data from a significantly altered schema.
 
    *  Minor Version Changes: A change in the minor version number (e.g.,
       from "1.0" to "1.1") indicates the addition of new features or
@@ -281,9 +232,9 @@ Table of Contents
    a single type of automated client.  It uses only the required fields,
    making it simple to generate and consume.
 
-   { "formatVersion": "1.0", "creationTime": "2025-08-15T14:30:00Z",
-   "prefixes": [ { "ipv4Prefix": "66.249.64.0/20" }, { "ipv4Prefix":
-   "34.64.0.0/12" }, { "ipv6Prefix": "2001:4860:4000::/36" } ] }
+   { "creationTime": "2025-08-15T14:30:00Z", "prefixes": [ {
+   "ipv4Prefix": "66.249.64.0/20" }, { "ipv4Prefix": "34.64.0.0/12" }, {
+   "ipv6Prefix": "2001:4860:4000::/36" } ] }
 
 4.2.  Example 2: Advanced Publication with Multiple Services
 
@@ -293,9 +244,9 @@ Table of Contents
    specialized ads crawler, and a user-triggered fetching service.  This
    allows consumers to implement more granular access policies.
 
-   { "formatVersion": "1.0", "creationTime": "2025-09-01T10:00:00Z",
-   "notes": "IP ranges for ExampleCloud services.  For verification,
-   FCrDNS is also recommended.", "Prefixes": "FILL OUT WITH EXAMPLE" }
+   { "creationTime": "2025-09-01T10:00:00Z", "notes": "IP ranges for
+   ExampleCloud services.  For verification, FCrDNS is also
+   recommended.", "Prefixes": "FILL OUT WITH EXAMPLE" }
 
 4.3.  Example 3: Aggregated Publication by a Third Party
 
@@ -306,10 +257,9 @@ Table of Contents
    the original publisher.  This reflects the use case of services that
    provide curated lists of known bots.
 
-   { "formatVersion": "1.0", "creationTime": "2025-09-02T00:00:00Z",
-   "notes": "Aggregated list of known good bots.  Data is updated daily
-   from original publisher sources.", "Prefixes": FILL OUT WITH EXAMPLE
-   }
+   { "creationTime": "2025-09-02T00:00:00Z", "notes": "Aggregated list
+   of known good bots.  Data is updated daily from original publisher
+   sources.", "Prefixes": FILL OUT WITH EXAMPLE }
 
 5.  Conventions and Definitions
 
@@ -334,15 +284,47 @@ Table of Contents
 
 7.  IANA Considerations
 
-   This document has no IANA actions.  (It does but need to flesh it
-   out)
+   IANA is requested to register the following media type in the "Media
+   Types" registry:
+
+   *  Type name: application
+
+   *  Subtype name: jafar+json
+
+   *  Required parameters: N/A
+
+   *  Optional parameters:
+
+      -  version: The version of the JAFAR specification the file
+         conforms to (e.g., "1.0").  If absent, it defaults to the
+         latest stable version supported by the consumer.
+
+   *  Encoding considerations: binary
+
+   *  Security considerations: See Section 6 (Section 6)
+
+   *  Interoperability considerations: N/A
+
+   *  Published specification: This Document
 
 8.  Normative References
+
+   [CBCP]     Illyes, G., Kühlewind, M., and K. Aj, "Crawler best
+              practices", Work in Progress, Internet-Draft, draft-
+              illyes-aipref-cbcp-04, 9 April 2026,
+              <https://datatracker.ietf.org/doc/html/draft-illyes-
+              aipref-cbcp-04>.
 
    [CIDR]     Fuller, V. and T. Li, "Classless Inter-domain Routing
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, DOI 10.17487/RFC4632, August
               2006, <https://www.rfc-editor.org/rfc/rfc4632>.
+
+   [HTTP-CACHING]
+              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Caching", STD 98, RFC 9111,
+              DOI 10.17487/RFC9111, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9111>.
 
    [IPV6]     Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, DOI 10.17487/RFC4291, February
