@@ -25,6 +25,8 @@ normative:
    IPV6: rfc4291
    CIDR: rfc4632
    JSON: rfc8259
+   HTTP-CACHING: rfc9111
+   CBCP: draft-illyes-aipref-cbcp-04
 
 informative:
 
@@ -46,7 +48,7 @@ accommodates a variety of use cases.
 
 # Introduction
 
-This document specifies a data format using JavaScript Object Notation (JSON).
+This document specifies a data format using JavaScript Object Notation ({{JSON}}).
 It is intended for the publication of IP address ranges associated with
 automated HTTP clients.
 The scope of this specification is limited to the syntax and semantics of the
@@ -65,23 +67,27 @@ integrated into a multi-layered verification process.
 
 An IP range publication file MUST be a single JSON object. The text encoding of
 the file MUST be UTF-8. This top-level object serves as the root container for
-essential metadata and the list of IP prefixes.
+metadata relevant to the file and the list of IP prefixes.
 
 The top-level object contains the fields defined in Table 1.
 
 | Field Name | Type | Requirement | Description |
 |---|---|---|---|
-|formatVersion|String|MUST|The version of this specification that the file conforms to, represented as a string in "major.minor" format (e.g., "1.0"). Consumers MUST use this to handle potential future breaking changes. See Section 3.2 for processing rules.|
-|synctoken|String|MUST|An opaque synchronization token that changes whenever there is a change to any metadata associated with one or more prefixes.|
-|creationTime|String|MUST|An ISO 8601 timestamp in the "Z" timezone (UTC) indicating when the file was generated (e.g., "2025-08-15T14:30:00Z").|
-|notes|String|OPTIONAL|A human-readable string containing any relevant notes, disclaimers, or comments from the publisher. This can be used to provide context that is not captured by the structured data.|
-|prefixes|Array|MUST|An array of Prefix Objects, as defined in Section 2.3. Each object in the array describes an IPv4 or IPv6 address range. This array MAY be empty if the publisher currently has no active IP ranges to declare.|
-
+|`synctoken`|String|MUST|An opaque synchronization token that changes whenever
+there is a change to any metadata associated with one or more prefixes.|
+|`creationTime`|String|MUST|An ISO 8601 timestamp in the "Z" timezone (UTC)
+indicating when the file was generated (e.g., "`2025-08-15T14:30:00Z`").|
+|`notes`|String|OPTIONAL|A human-readable string containing any relevant notes,
+disclaimers, or comments from the publisher. This can be used to provide context
+that is not captured by the structured data.|
+|`prefixes`|Array|MUST|An array of Prefix Objects, as defined in Section 2.3.
+Each object in the array describes an IPv4 or IPv6 address range. This array MAY
+be empty if the publisher currently has no active IP ranges to declare.|
 
 
 ## The prefixes Array
 
-The prefixes member of the top-level object MUST contain an array of JSON
+The `prefixes` member of the top-level object MUST contain an array of JSON
 objects. Each of these objects is a Prefix Object, as defined in Section 2.3.
 
 To simplify implementation for consumers, there MUST be a single, unified array
@@ -93,16 +99,22 @@ for both IPv4 and IPv6 prefixes.
 Each object within the prefixes array represents a single IP address range and
 its associated metadata.
 
-A Prefix Object MUST contain exactly one of either the ipv4Prefix field or the
-ipv6Prefix field. An object containing both or neither of these fields is
+A Prefix Object MUST contain exactly one of either the `ipv4Prefix` or
+`ipv6Prefix` field. An object containing both or neither of these fields is
 invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 
 | Field Name | Type | Requirement | Description |
 |---|---|---|---|
-| ipv4Prefix | String | CONDITIONAL | The IPv4 address range in Classless Inter-Domain Routing (CIDR) notation (e.g., "66.249.64.0/20"). This field MUST be present if the ipv6Prefix field is absent. |
-| ipv6Prefix | String | CONDITIONAL | The IPv6 address range in CIDR notation (e.g., "2001:4860:4000::/36"). This field MUST be present if the ipv4Prefix field is absent. |
-| service | String | OPTIONAL | A publisher-defined, case-sensitive string that identifies the specific service, bot, or purpose associated with this prefix. Examples include "Bingbot", "AdsBot-Google". This allows consumers to apply more granular policies. |
-
+|`ipv4Prefix`| String | CONDITIONAL | The IPv4 address range in Classless
+Inter-Domain Routing ({{CIDR}}) notation (e.g., "`66.249.64.0/20`"). This field
+MUST be present if the `ipv6Prefix` field is absent. |
+|`ipv6Prefix`| String | CONDITIONAL | The IPv6 address range in CIDR notation
+(e.g., "`2001:4860:4000::/36`"). This field MUST be present if the `ipv4Prefix`
+field is absent. |
+|`service`| String | OPTIONAL | A publisher-defined, case-sensitive string that
+identifies the specific service, bot, or purpose associated with this prefix.
+Examples include "Bingbot", "AdsBot-Google". This allows consumers to apply more
+granular policies. |
 
 
 # Processing and Consumption Rules
@@ -112,7 +124,8 @@ invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 
 Consumers SHOULD fetch the machine-readable IP range publication file from a
 stable URL provided by the publisher. The file location MUST be disclosed by the
-publisher of the file on the page that describes the crawler.
+publisher of the file on the page that describes the crawler as specified by
+{{CBCP}}.
 
 Publishers SHOULD update the file when there is any change to the prefixes, or
 at least every 24 hours, even if the only update is to `creationTime`. Consumers
@@ -122,40 +135,45 @@ than once per hour unless explicitly permitted by the publisher's documentation
 or HTTP caching headers.
 
 To minimize server load for the publisher and reduce unnecessary bandwidth usage
-for the consumer, consumers MUST respect standard HTTP caching headers that may
-be present in the response, such as Cache-Control, ETag, and Last-Modified.
-Publishers SHOULD provide these headers to facilitate efficient caching.
+for the consumer, consumers MUST respect standard HTTP caching headers specified
+in {{HTTP-CACHING} }that may be present in the response, such as
+`Cache-Control`, `ETag`, and `Last-Modified`. Publishers SHOULD provide these
+headers to facilitate efficient caching.
 
 
 ## Handling Format Versioning
 
 To ensure long-term stability and allow for future evolution of this
-specification, consumers MUST inspect the formatVersion field in the top-level
-object of the file. The version is expressed as "major.minor".
+specification, consumers MUST inspect the `version` optional parameter
+of the `application/jafar+json` media type, as specified in the
+`Content-Type` HTTP header. The version is expressed as "major.minor".
+If the `version` parameter is absent, consumers SHOULD assume the latest
+stable version of this specification they are programmed to handle.
 
 
 *  Major Version Changes: A change in the major version number (e.g., from "1.0"
-to "2.0") indicates a non-backward-compatible change to the specification. If a
-consumer encounters a file with a major version number greater than the major
-version it is programmed to handle, the consumer MUST NOT attempt to parse the
-file. It SHOULD treat this situation as an error and MAY continue to use its
-last known valid list until it can be updated to support the new version. This
-prevents the misinterpretation of data from a significantly altered schema.
+   to "2.0") indicates a non-backward-compatible change to the specification. If
+   a consumer encounters a file advertised with a major version number greater
+   than the major version it is programmed to handle, the consumer MUST NOT
+   attempt to parse the file. It SHOULD treat this situation as an error and MAY
+   continue to use its last known valid list until it can be updated to support
+   the new version. This prevents the misinterpretation of data from a
+   significantly altered schema.
 *  Minor Version Changes: A change in the minor version number (e.g., from "1.0"
-to "1.1") indicates the addition of new features or fields that are
-backward-compatible. For example, a new OPTIONAL field might be added to the
-Prefix Object. A consumer programmed to handle version "1.0" MUST be able to
-correctly parse a file with version "1.1". The minor version number increases
-numerically independently of the major version number,
-for instance: 1.9 -> 1.10 -> 1.11. The consumer MUST ignore any unrecognized
-fields or properties within the JSON objects.
+   to "1.1") indicates the addition of new features or fields that are
+   backward-compatible. For example, a new OPTIONAL field might be added to the
+   Prefix Object. A consumer programmed to handle version "1.0" MUST be able to
+   correctly parse a file with version "1.1". The minor version number increases
+   numerically independently of the major version number,
+   for instance: 1.9 -> 1.10 -> 1.11. The consumer MUST ignore any unrecognized
+   fields or properties within the JSON objects.
 
 
 ## Prefix Aggregation and Specificity
 
 A publication file MAY contain overlapping IP address ranges. For instance, a
-publisher might list a broad range like 198.51.100.0/22 with a generic service
-tag, and also list a more specific range within it, such as 198.51.100.0/24,
+publisher might list a broad range like `198.51.100.0/22` with a generic service
+tag, and also list a more specific range within it, such as `198.51.100.0/24`,
 with a more specific service tag.
 
 When a consumer evaluates a specific IP address against the list, it MAY match
@@ -176,7 +194,6 @@ generate and consume.
 
 ```
 {
-  "formatVersion": "1.0",
   "creationTime": "2025-08-15T14:30:00Z",
   "prefixes": [
     {
@@ -205,7 +222,6 @@ granular access policies.
 
 ```
 {
-  "formatVersion": "1.0",
   "creationTime": "2025-09-01T10:00:00Z",
   "notes": "IP ranges for ExampleCloud services. For verification, FCrDNS is also recommended.",
   "Prefixes": "FILL OUT WITH EXAMPLE"
@@ -225,7 +241,6 @@ use case of services that provide curated lists of known bots.
 
 ```
 {
-  "formatVersion": "1.0",
   "creationTime": "2025-09-02T00:00:00Z",
   "notes": "Aggregated list of known good bots. Data is updated daily from original publisher sources.",
   "Prefixes": FILL OUT WITH EXAMPLE
@@ -250,7 +265,20 @@ by HTTPS, which should be mandated for the transport.
 
 # IANA Considerations
 
-This document has no IANA actions. (It does but need to flesh it out)
+IANA is requested to register the following media type in the "Media Types"
+registry:
+
+* Type name: application
+* Subtype name: jafar+json
+* Required parameters: N/A
+* Optional parameters:
+    * version: The version of the JAFAR specification the file conforms to
+    (e.g., "1.0"). If absent, it defaults to the latest stable version supported
+    by the consumer. 
+* Encoding considerations: binary
+* Security considerations: See [Section 6](#security-considerations)
+* Interoperability considerations: N/A
+* Published specification: This Document
 
 
 --- back
