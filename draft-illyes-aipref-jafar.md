@@ -26,7 +26,7 @@ normative:
    CIDR: rfc4632
    JSON: rfc8259
    HTTP-CACHING: rfc9111
-   CBCP: draft-illyes-aipref-cbcp-04
+   CBCP: I-D.draft-illyes-aipref-cbcp
 
 informative:
 
