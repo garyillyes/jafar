@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T02:28:04.338905+00:00",
+  "timestamp": "2026-04-12T02:42:05.278522+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -55,16 +55,38 @@
       "id": "I_kwDOP5wKzs7jqRwR",
       "title": "synctoken is a MUST but not provided in the examples",
       "url": "https://github.com/garyillyes/jafar/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thibmeu",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "None of the examples provided include a synctoken. It could be worth adding so examples are complete.\n\nFor instance, I've complete the first example on https://github.com/thibmeu/jafar/blob/main/examples/1-basic-publication.json",
       "createdAt": "2026-01-15T22:44:26Z",
-      "updatedAt": "2026-01-15T22:44:26Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-11T18:46:34Z",
+      "closedAt": "2026-04-11T18:46:34Z",
+      "comments": [
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "Made some changes based on the issues i've collected from the internets. PTAL: https://garyillyes.github.io/jafar/draft-illyes-aipref-jafar.html ",
+          "createdAt": "2026-04-10T20:38:10Z",
+          "updatedAt": "2026-04-10T20:38:10Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "NONE",
+          "body": "lgtm\n\nThe removal of formatVersion in favor of a media type and the marking of synctoken as optional addresses this issue.\n\nfyi: I used this link to review as it shows the diff, making it easier to read https://author-tools.ietf.org/api/iddiff?doc_1=draft-illyes-aipref-jafar&url_2=https://garyillyes.github.io/jafar/draft-illyes-aipref-jafar.txt",
+          "createdAt": "2026-04-11T18:36:43Z",
+          "updatedAt": "2026-04-11T18:36:43Z"
+        },
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "I didn't know you can diff against the github copy, that's cool! \n\nClosing",
+          "createdAt": "2026-04-11T18:46:34Z",
+          "updatedAt": "2026-04-11T18:46:34Z"
+        }
+      ]
     },
     {
       "number": 2,
@@ -78,24 +100,53 @@
       "labels": [],
       "body": "I wrote a JSON schema validation for JAFAR in https://github.com/thibmeu/jafar.\n\nOne thing I noticed, which is similar in some other languages, is that there is a type for ipv4/ipv6, but none for the ip ranges. Something like\n\n```\n{\n  \"address\": IPV4,\n  \"prefix_len\": number,\n}\n```\n\nI'm not sure to what extent this is prevalent, therefore opening an issue as a discussion point.",
       "createdAt": "2026-01-15T22:48:01Z",
-      "updatedAt": "2026-01-15T22:48:01Z",
+      "updatedAt": "2026-04-11T18:50:09Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "Is my understanding correct that our two options are:\n\n1. Leave as CIDR: ~one extra line in parsing (string.split(\"/\") => [address, prefix_len]), but save lines in the JSON\n2. Split the fields: save ~one extra line in parsing, but add lines in JSON\n\nI think I have slight preference for leaving as is because it's less brittle on the producer side (at least with the systems I work with), but could certainly do the split fields also.",
+          "createdAt": "2026-04-10T20:56:34Z",
+          "updatedAt": "2026-04-10T20:56:34Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "NONE",
+          "body": "I'd agree there are only two options. I lean toward the single-string CIDR representation as well, despite limitation. It's more compact and more readable.\n\nThe main downside is that JSON Schema or OpenAPI don't have a native cidr format (only bare IP addresses), so schema-level validation falls to a regex (the infamous [IPV6 regex](https://github.com/thibmeu/jafar/blob/main/schema.json)) or custom validation.\n\nFor common languages, this does not seem to be an issue given libraries can handle it:\n* Zod (TypeScript)\n* Pydantic (Python)\n* serde+ipnet (Rust)\n* Go (native)\n",
+          "createdAt": "2026-04-11T18:32:29Z",
+          "updatedAt": "2026-04-11T18:32:29Z"
+        },
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "Do you want to move the schema over, btw? or is better if it's sitting separately?On 11 Apr 2026, at 20:32, Thibault ***@***.***> wrote:\ufeffthibmeu left a comment (garyillyes/jafar#2)\r\nI'd agree there are only two options. I lean toward the single-string CIDR representation as well, despite limitation. It's more compact and more readable.\r\nThe main downside is that JSON Schema or OpenAPI don't have a native cidr format (only bare IP addresses), so schema-level validation falls to a regex (the infamous IPV6 regex) or custom validation.\r\nFor common languages, this does not seem to be an issue given libraries can handle it:\r\n\r\nZod (TypeScript)\r\nPydantic (Python)\r\nserde+ipnet (Rust)\r\nGo (native)\r\n\r\n\r\n\u2014Reply to this email directly, view it on GitHub, or unsubscribe.You are receiving this because you commented.Message ID: ***@***.***>",
+          "createdAt": "2026-04-11T18:45:05Z",
+          "updatedAt": "2026-04-11T18:45:05Z"
+        },
+        {
+          "author": "thibmeu",
+          "authorAssociation": "NONE",
+          "body": "Happy to port the schema over to the new version yes. The diff is rather small.",
+          "createdAt": "2026-04-11T18:50:09Z",
+          "updatedAt": "2026-04-11T18:50:09Z"
+        }
+      ]
     },
     {
       "number": 3,
       "id": "I_kwDOP5wKzs7oWLuk",
       "title": "Replace in-body `formatVersion` and `synctoken` with Media Types and ETags",
       "url": "https://github.com/garyillyes/jafar/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "garyillyes",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Feedback from the mailing list suggests that the current formatVersion and synctoken fields are redundant with existing HTTP mechanisms and are not present in existing deployments.\n\n- Format Version: `formatVersion` is a \"bad pattern\" that is redundant with Media Types. Martin suggests to remove this field and instead register a specific Media Type (potentially with a default version of 1.0) to signal content model compatibility.\n- Sync Token: Thibault  suggests the `synctoken` is redundant with the HTTP ETag header, although Martin seems to disagree. It is suggested to make this field OPTIONAL or remove it entirely in favor of standard HTTP caching mechanisms (RFC 9110 Section 8.8.3).\n\n**Proposed Action:**\n\n1. Remove formatVersion from the JSON body and specify a Media Type.\n2. Decide whether to remove synctoken (or make it optional) and potentially require the use of ETag for integrity and caching.\n\nReferences:\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/)\n",
       "createdAt": "2026-02-04T19:41:42Z",
-      "updatedAt": "2026-02-04T19:41:42Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-10T20:10:51Z",
+      "closedAt": "2026-04-10T20:10:51Z",
       "comments": []
     },
     {
@@ -110,7 +161,7 @@
       "labels": [],
       "body": "Martin has questioned the utility of defining multiple services within a single JAFAR file ([`service` tag](https://www.ietf.org/archive/id/draft-illyes-aipref-jafar-00.html#table-2)).\n\nWhile large operators share infrastructure, it may be cleaner to either copy identical content or have different files for different services (e.g., \"googlebot\" vs others). The current draft structure might be \"over-engineered\" compared to the reality where a crawler operates a logical service from IP ranges.\n\n**Proposed Structure:**\nMartin  suggested a simplified structure that focuses on a single service definition:\n\n```JSON\n{\n  \"service\": \"googlebot\",\n  \"description\": \"https://some.url/for/googlebot\",\n  \"notes\": \"...\",\n  \"lastUpdated\": \"2026-01-01T11:00Z\",\n  \"ipv4\": [\"192.0.2/8\", \"...\"],\n  \"ipv6\": [\"2404:6800:4006::/56\", \"...\"]\n}\n```\n\n**Proposed Action:**\nDiscuss changing the cardinality rules to support one service per file to reduce complexity for consumers.\n\nReference:\n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/UXpJMWkKTNCk_5OD2j01b782n3w/)",
       "createdAt": "2026-02-04T19:45:07Z",
-      "updatedAt": "2026-03-16T14:32:23Z",
+      "updatedAt": "2026-04-11T09:46:58Z",
       "closedAt": null,
       "comments": [
         {
@@ -119,6 +170,20 @@
           "body": "I broadly agree with this, if I am only interested for example in allowing `Googlebot`, I would as a consumer find it much easier to subscribe to a Service specific file, and not waste bytes and time having to parse out only the relevant ones.\n\nI also imagine it's perhaps easier for publishers to create files that automatically contain a subset of IP ranges filtered to appropriate services, perhaps even determined from URL, e.g. `/ipranges/all/ip-ranges.json` for all published IP ranges, `/ipranges/googlebot/ip-ranges.json`\n\nI also like the addition of a field that could act as a pointer as to where to find out more about the service. I get there is a requirement to publish a link to the jafar file on the crawler description page, I think it would be good to have this file point back.\n\nAn alternative might be allow either a string or an array of strings for service if it remains scoped in the prefixes, e.g.\n\n```\n{\n  \"creation_time\": \"2026-03-16T13:00:00.000Z\",\n  \"synctoken\": \"....\",\n  \"notes\": \"This file contains the IP ranges for some services\",\n  \"formatVersion\": \"1.0\",\n  \"prefixes\": [\n    {\n      \"ipv4Prefix\": \"66.249.78.32/272\",\n      \"service\": [\n        {\n          \"name\": \"Googlebot\",\n          \"explainer\": \"https://developers.google.com/search/docs/advanced/crawling/verifying-googlebot\"\n        },\n        {\n          \"name\": \"Google-Safety\",\n          \"explainer\": \"https://developers.google.com/crawling/docs/crawlers-fetchers/google-special-case-crawlers\"\n        }\n      ]\n    }\n  ]\n}\n```\n\nThat would avoid having to repeat IP addresses for each service.\n\n",
           "createdAt": "2026-03-16T14:32:23Z",
           "updatedAt": "2026-03-16T14:32:23Z"
+        },
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "Could you check out the brand new https://garyillyes.github.io/jafar/draft-illyes-aipref-jafar.html#name-example-2-advanced-publicat ?\n\nI do see value in an \"explainer\" field but it adds quite a bit of complexity to the prefix object. In theory at least, the JSON file was discovered on the page that \"explainer\" would link to, so it's also circular (which is not necessarily bad)\n\nrelated: [2.5. ](https://garyillyes.github.io/cbcp/draft-illyes-aipref-cbcp.html#section-2.5)[Crawlers must expose the IP ranges they use for crawling](https://garyillyes.github.io/cbcp/draft-illyes-aipref-cbcp.html#name-crawlers-must-expose-the-ip)",
+          "createdAt": "2026-04-10T21:01:59Z",
+          "updatedAt": "2026-04-10T21:01:59Z"
+        },
+        {
+          "author": "dwsmart",
+          "authorAssociation": "NONE",
+          "body": "Excellent.\n\nI very much see your point about the added complexity of an explainer field.\n\nI was perhaps thinking more about the aggregator use-case more here, where the file is compiled by a third party, so that circle would be broken.\n\nI suppose that would also be contingent on third parties aggregating from the original jafar files, bringing these in, vs. something more like a CDN publishing IP ranges it has determined are belonging to a bot.\n\nBut I think that is perhaps not the intended use for this anyway, and it is supposed to be operator published, or aggregated from those 'official' sources?\n",
+          "createdAt": "2026-04-10T21:39:02Z",
+          "updatedAt": "2026-04-11T09:46:58Z"
         }
       ]
     },
@@ -143,15 +208,15 @@
       "id": "I_kwDOP5wKzs7oWTKd",
       "title": "Update Examples to Match Field Definitions",
       "url": "https://github.com/garyillyes/jafar/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "garyillyes",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Thibault  notes that there is a discrepancy between the current draft definitions, the current implementations in use, and the provided examples. Specifically, `synctoken` is marked as a \"MUST\" in the text, but it is absent from the provided examples (and live implementations).\n\n**Proposed Action:**\nUpdate the examples to include all mandatory fields, or update the schema if fields like synctoken are removed.\n\nReference: \n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)",
       "createdAt": "2026-02-04T19:50:56Z",
-      "updatedAt": "2026-02-04T19:50:56Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-10T20:39:08Z",
+      "closedAt": "2026-04-10T20:39:08Z",
       "comments": []
     },
     {
@@ -175,15 +240,62 @@
       "id": "I_kwDOP5wKzs778cAD",
       "title": "Feedback from @sebastian-nagel",
       "url": "https://github.com/garyillyes/jafar/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "garyillyes",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "From @sebastian-nagel on a [CBCP issue](https://github.com/garyillyes/cbcp/issues/4#issuecomment-3369148095)\n* notes and service are useful optional fields\n* I like the idea to \"reuse\" the same format also for aggregated IP range lists\n* the synctoken is defined as mandatory, but it's not included in the example(s).",
       "createdAt": "2026-04-08T18:56:28Z",
-      "updatedAt": "2026-04-08T18:56:28Z",
+      "updatedAt": "2026-04-10T20:38:34Z",
+      "closedAt": "2026-04-10T20:38:34Z",
+      "comments": []
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOP5wKzs78Yziq",
+      "title": "Clarifications regarding crawler IP ranges",
+      "url": "https://github.com/garyillyes/jafar/issues/9",
+      "state": "OPEN",
+      "author": "sebastian-nagel",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "> crawler operators should expose the IP ranges they allocated for crawling in a standardized, machine readable format, and keep it reasonably up to date (i.e. shouldn't get older than 7 days).\n\n1. Replace \"shouldn't get older than 7 days\" by \"shouldn't get outdated for more than 7 days\"?\n  The term \"old\" is unspecific: it could also mean that the file is required to be touched every 7 days, without keeping the information up-to-date.\n \n2. Is a 7-day update period sufficient?\n   There are at least the following use cases for the list of IP address ranges:\n   1. verify requests in web server access logs.\n   2. configure IP blocking or explicitly allowing the specified IP ranges.\n   3. IP targeting which includes also \"black hat\" techniques such as \"cloaking\".\n  \n   For (i), \"historic\" IP ranges are a requirement, otherwise verification may raise false alarms about faked user-agent strings in past requests. This would also recommend to attach time periods to IP address ranges.\n\n   For (ii) and (iii), a 7-day update period seems overtly long. New IP ranges should be announced even ahead of time. Since we have to assume that everybody plays nice, \"black hat\" techniques are no counter argument for announcing IP address ahead of time. However, they might be mentioned in the section \"Security Considerations\".\n\n3. An example JSON schema would help to keep variations of `crawlerips.json` at a minimum. At least, it should be mentioned what \"standardized\" means \u2013 \"constant\" for the crawler with a published description / specification or whether it is part of a globally defined standard (maybe upcoming).\n\n4. What about reverse DNS as an alternative or augmenting technique for crawler verification? Should this be mentioned or even added as a section?\n\n",
+      "createdAt": "2025-04-17T11:13:39Z",
+      "updatedAt": "2026-04-09T19:05:53Z",
       "closedAt": null,
+      "comments": [
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "Howdy! \n\nI mentioned this in the interim meeting, but to put it here as well: I won't be able to develop this I-D further for various reasons. I would LOVE if someone could pick it up and develop it further though together with publishers, and then bring it back to the IETF (not yet sure which WG) for adoption. ",
+          "createdAt": "2025-04-22T11:12:37Z",
+          "updatedAt": "2025-04-22T11:12:37Z"
+        },
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "Looks like we're gonna work on this. Feel free to look at the other open issues (specifically [https://github.com/garyillyes/cbcp/issues/4](https://github.com/garyillyes/cbcp/issues/4)) and, if you feel like it, send PRs",
+          "createdAt": "2025-07-05T20:38:50Z",
+          "updatedAt": "2025-07-05T20:38:50Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOP5wKzs78rIWZ",
+      "title": "Explore repeated \"service\" tags",
+      "url": "https://github.com/garyillyes/jafar/issues/10",
+      "state": "CLOSED",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Jan Caerels via [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7445155511064309760?commentUrn=urn%3Ali%3Acomment%3A%28activity%3A7445155511064309760%2C7445184742850744320%29&dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287445184742850744320%2Curn%3Ali%3Aactivity%3A7445155511064309760%29)\n\n`How would that service string look like if you have 2 services sharing the same IP range? Make it two objects or should/could Service be an array?`",
+      "createdAt": "2026-04-10T12:32:58Z",
+      "updatedAt": "2026-04-10T20:31:56Z",
+      "closedAt": "2026-04-10T20:31:55Z",
       "comments": []
     }
   ],
