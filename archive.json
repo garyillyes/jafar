@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-19T02:46:56.548663+00:00",
+  "timestamp": "2026-04-21T02:41:40.665248+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -296,6 +296,22 @@
       "createdAt": "2026-04-10T12:32:58Z",
       "updatedAt": "2026-04-10T20:31:56Z",
       "closedAt": "2026-04-10T20:31:55Z",
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOP5wKzs7_u2RM",
+      "title": "`creationTime` potentially conflicts with HTTP caching BCP",
+      "url": "https://github.com/garyillyes/jafar/issues/11",
+      "state": "OPEN",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Looking through the caching recs, I can't wrap my head around how `creationTime` and ETag could get along. \n\n- `creationTime` is supposed to be refreshed even if the prefixes haven't changed. In theory this is a good idea because it confirms \"the file is not stale, just hasn't changed\". \n- ETag is some hash or fingerprint of the HTTP body and if even a single octet is changed, the ETag will change. \n\nSo `creationTime` and ETag seem to be incompatible?\n\nOne idea could be to exclude `creationTime` from the ETag hashing but that just pushes the issue to a lower stack level, a much more complex level. Also, if using a CDN for the file distribution, the publisher of the JAFAR object might not even have control over the ETag.",
+      "createdAt": "2026-04-19T09:37:03Z",
+      "updatedAt": "2026-04-19T09:37:03Z",
+      "closedAt": null,
       "comments": []
     }
   ],
