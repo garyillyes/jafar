@@ -3,11 +3,11 @@ title: "A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients"
 abbrev: "JAFAR"
 category: info
 
-docname: draft-illyes-aipref-jafar-latest
+docname: draft-illyes-webbotauth-jafar-latest
 submissiontype: independent
 number:
 date:
-v: 4
+v: 5
 # area: AREA
 # workgroup: WG Working Group
 keyword:
