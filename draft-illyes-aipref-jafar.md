@@ -104,6 +104,11 @@ invalid and MUST be ignored by consumers. The fields are defined in Table 2.
 |`services`| Array | OPTIONAL | An array of publisher-defined, case-sensitive strings identifying the services associated with this prefix. For example ["Examplebot", "AdsBot-Example"]. This allows consumers to apply more granular policies. |
 
 
+## Extensibility
+The JAFAR format is extensible. Both the top-level object and Prefix Objects MAY
+include additional fields not defined in this specification. Consumers MUST
+ignore any fields they do not recognize.
+
 # Processing and Consumption Rules
 
 
