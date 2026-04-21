@@ -9,7 +9,7 @@ Expires: 23 October 2026
 
 
  A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients
-                    draft-illyes-aipref-jafar-latest
+                  draft-illyes-webbotauth-jafar-latest
 
 Abstract
 
