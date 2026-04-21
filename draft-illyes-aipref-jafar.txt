@@ -4,8 +4,8 @@
 
 Network Working Group                                          G. Illyes
 Internet-Draft                                               Independent
-Intended status: Informational                             10 April 2026
-Expires: 12 October 2026
+Intended status: Informational                             21 April 2026
+Expires: 23 October 2026
 
 
  A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 October 2026.
+   This Internet-Draft will expire on 23 October 2026.
 
 Copyright Notice
 
@@ -69,6 +69,7 @@ Table of Contents
      2.1.  Top-Level Object Definition
      2.2.  The prefixes Array
      2.3.  The Prefix Object
+     2.4.  Extensibility
    3.  Processing and Consumption Rules
      3.1.  Fetching and Caching
      3.2.  Handling Format Versioning
@@ -198,6 +199,13 @@ Table of Contents
      +------------+--------+-------------+---------------------------+
 
                                   Table 2
+
+2.4.  Extensibility
+
+   The JAFAR format is extensible.  Both the top-level object and Prefix
+   Objects MAY include additional fields not defined in this
+   specification.  Consumers MUST ignore any fields they do not
+   recognize.
 
 3.  Processing and Consumption Rules
 
