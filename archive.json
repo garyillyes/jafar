@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-21T02:41:40.665248+00:00",
+  "timestamp": "2026-04-23T02:43:06.177926+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -192,15 +192,15 @@
       "id": "I_kwDOP5wKzs7oWREd",
       "title": "Define Forward Compatibility (Ignore Unknown Fields)",
       "url": "https://github.com/garyillyes/jafar/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "garyillyes",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "The draft does not currently specify how clients/consumers should handle additional fields present in the JSON that are not defined in the spec.\n\nTo ensure forward compatibility and clearer schema validation, it is suggested to add specific language regarding extensibility.\n\n**Proposed Text (by Thibault):**\n\"Services MAY include additional fields. Consumers MUST ignore unknown fields.\".\n\nReference: \n[https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/](https://mailarchive.ietf.org/arch/msg/web-bot-auth/Yqw0r8Ry2I6wqB5huKxUQs-ApLE/)",
       "createdAt": "2026-02-04T19:48:20Z",
-      "updatedAt": "2026-02-04T19:48:20Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-21T21:00:36Z",
+      "closedAt": "2026-04-21T21:00:36Z",
       "comments": []
     },
     {
