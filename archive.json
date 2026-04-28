@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-26T02:50:05.625784+00:00",
+  "timestamp": "2026-04-28T03:21:14.262323+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -310,9 +310,17 @@
       "labels": [],
       "body": "Looking through the caching recs, I can't wrap my head around how `creationTime` and ETag could get along. \n\n- `creationTime` is supposed to be refreshed even if the prefixes haven't changed. In theory this is a good idea because it confirms \"the file is not stale, just hasn't changed\". \n- ETag is some hash or fingerprint of the HTTP body and if even a single octet is changed, the ETag will change. \n\nSo `creationTime` and ETag seem to be incompatible?\n\nOne idea could be to exclude `creationTime` from the ETag hashing but that just pushes the issue to a lower stack level, a much more complex level. Also, if using a CDN for the file distribution, the publisher of the JAFAR object might not even have control over the ETag.",
       "createdAt": "2026-04-19T09:37:03Z",
-      "updatedAt": "2026-04-19T09:37:03Z",
+      "updatedAt": "2026-04-27T09:14:22Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "thibmeu",
+          "authorAssociation": "NONE",
+          "body": "I assume you are referring to [RFC9111](https://www.rfc-editor.org/rfc/rfc9111.html).\n\nsomehow I like the \"set and forget\" model of the file, which provides immutability. `creationTime` can remain stable here. The only change I would add in the spec is rather than refering to Etag, I would use [`Last-Modified`](https://www.rfc-editor.org/rfc/rfc9110#name-last-modified). Something along the line\n\n```\nWhen `Last-Modified` (Section 8.8.2 of RFC9110) is present, it's value should correspond to `creationTime`.\n```\n\n\n---\nSome precision as to my understanding of `Etag`.\n\n[ETag](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3) can be whatever. It's true it can be a digest over the content, but that's not a requirement. Section 8.8.3.1\n\n```\nSince the value [of Etag] is opaque, there is no need for the client to be aware of how each entity tag is constructed\n```\n\n",
+          "createdAt": "2026-04-27T09:14:21Z",
+          "updatedAt": "2026-04-27T09:14:21Z"
+        }
+      ]
     }
   ],
   "pulls": []
