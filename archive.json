@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-13T05:47:21.105919+00:00",
+  "timestamp": "2026-10-15T03:32:14.289762+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -321,6 +321,54 @@
           "updatedAt": "2026-04-27T09:14:21Z"
         }
       ]
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOP5wKzs8AAAABXUAdHQ",
+      "title": "Geographic information",
+      "url": "https://github.com/garyillyes/jafar/issues/12",
+      "state": "OPEN",
+      "author": "mnot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Some sources publish geolocation per prefix as RFC 8805 geofeeds (iCloud Private Relay, Linode, DigitalOcean, Vultr), and others label prefixes with a cloud region (AWS, Oracle). JAFAR carries neither. If that\u2019s intentional, it\u2019d help to say so in the draft, and why.",
+      "createdAt": "2026-10-15T03:16:33Z",
+      "updatedAt": "2026-10-15T03:16:33Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOP5wKzs8AAAABXUCL3w",
+      "title": "Relationship to other sources of identity",
+      "url": "https://github.com/garyillyes/jafar/issues/13",
+      "state": "OPEN",
+      "author": "mnot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Clients are now identified by up to three mechanisms: published IP ranges (JAFAR), reverse DNS, and Web Bot Auth signatures. Providers can use more than one at once, and the draft\u2019s own Example 2 notes that FCrDNS is \u201calso recommended\u201d, but only as free text.\n\nWhat should a verifier do when they disagree? For example:\n\nA request has a valid Web Bot Auth signature but comes from outside the advertised ranges.\nA request comes from inside the ranges but is unsigned, or the signature is invalid.\nA request has matching reverse DNS but is outside the ranges.\n\nEither the draft could define precedence and error handling, or JAFAR could let a provider say how its mechanisms combine (e.g., ranges are authoritative, or any one mechanism suffices).",
+      "createdAt": "2026-10-15T03:19:52Z",
+      "updatedAt": "2026-10-15T03:19:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOP5wKzs8AAAABXUHBPQ",
+      "title": "RDNS",
+      "url": "https://github.com/garyillyes/jafar/issues/14",
+      "state": "OPEN",
+      "author": "mnot",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Many providers also use reverse DNS to identify their bots: the client\u2019s IP must reverse-resolve to a hostname under a published domain, and forward-resolve back to the IP. In the roughly 120 bot definitions (run by about 34 providers) my tool curates, about half declare such domains, some alongside a range feed.\n\nShould JAFAR let a publisher declare these domains (e.g., a list of domain suffixes at the top level, or per prefix)? See also #13 on how the mechanisms should combine.",
+      "createdAt": "2026-10-15T03:28:54Z",
+      "updatedAt": "2026-10-15T03:28:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": []
