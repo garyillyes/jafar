@@ -4,8 +4,8 @@
 
 Network Working Group                                          G. Illyes
 Internet-Draft                                               Independent
-Intended status: Informational                             21 April 2026
-Expires: 23 October 2026
+Intended status: Informational                           22 October 2026
+Expires: 25 April 2027
 
 
  A JSON-Based Format for Publishing IP Ranges of Automated HTTP Clients
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2026.
+   This Internet-Draft will expire on 25 April 2027.
 
 Copyright Notice
 
