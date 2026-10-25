@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-22T03:36:27.712200+00:00",
+  "timestamp": "2026-10-25T03:32:35.370127+00:00",
   "repo": "garyillyes/jafar",
   "labels": [
     {
@@ -310,7 +310,7 @@
       "labels": [],
       "body": "Looking through the caching recs, I can't wrap my head around how `creationTime` and ETag could get along. \n\n- `creationTime` is supposed to be refreshed even if the prefixes haven't changed. In theory this is a good idea because it confirms \"the file is not stale, just hasn't changed\". \n- ETag is some hash or fingerprint of the HTTP body and if even a single octet is changed, the ETag will change. \n\nSo `creationTime` and ETag seem to be incompatible?\n\nOne idea could be to exclude `creationTime` from the ETag hashing but that just pushes the issue to a lower stack level, a much more complex level. Also, if using a CDN for the file distribution, the publisher of the JAFAR object might not even have control over the ETag.",
       "createdAt": "2026-04-19T09:37:03Z",
-      "updatedAt": "2026-04-27T09:14:22Z",
+      "updatedAt": "2026-10-22T12:20:36Z",
       "closedAt": null,
       "comments": [
         {
@@ -319,6 +319,13 @@
           "body": "I assume you are referring to [RFC9111](https://www.rfc-editor.org/rfc/rfc9111.html).\n\nsomehow I like the \"set and forget\" model of the file, which provides immutability. `creationTime` can remain stable here. The only change I would add in the spec is rather than refering to Etag, I would use [`Last-Modified`](https://www.rfc-editor.org/rfc/rfc9110#name-last-modified). Something along the line\n\n```\nWhen `Last-Modified` (Section 8.8.2 of RFC9110) is present, it's value should correspond to `creationTime`.\n```\n\n\n---\nSome precision as to my understanding of `Etag`.\n\n[ETag](https://www.rfc-editor.org/rfc/rfc9110#section-8.8.3) can be whatever. It's true it can be a digest over the content, but that's not a requirement. Section 8.8.3.1\n\n```\nSince the value [of Etag] is opaque, there is no need for the client to be aware of how each entity tag is constructed\n```\n\n",
           "createdAt": "2026-04-27T09:14:21Z",
           "updatedAt": "2026-04-27T09:14:21Z"
+        },
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "> When `Last-Modified` (Section 8.8.2 of RFC9110) is present, it's value should correspond to `creationTime`.\n\nI like that. I'll make it happen. \n\nRe: ETag. Trying to be as explicit as I can be; is this better or I just made it way too verbose:\n\n```\n## Fetching and Caching\n\nConsumers retrieve JAFAR publication documents via HTTPS GET requests to the\ndesignated URI.\n\nPublishers SHOULD include an `etag` response header field ([RFC9110], Section\n8.8.3) representing the current representation of the document. Publishers\nSHOULD compute the entity tag using a cryptographic hash (such as SHA-256) over\nthe representation body so that updates to external timestamps or serialization\nartifacts do not trigger unnecessary invalidations when prefix definitions\nremain unchanged.\n\nWhen a publisher provides a `last-modified` response header field ([RFC9110],\nSection 8.8.2), the timestamp SHOULD represent the same instant as the\ndocument's internal `creationTime` attribute, formatted as an `HTTP-date`\n([RFC9110], Section 5.6.7).\n\nPublishers SHOULD serve appropriate `cache-control` header fields ([RFC9111],\nSection 5.2). To prevent unbounded authorization drift following the revocation\nof network ranges, publishers SHOULD specify the `must-revalidate` directive if\nstale definitions must not be used beyond the declared freshness lifetime.\n\nWhen issuing subsequent requests for a previously fetched document:\n\n* Consumers MUST store the received entity tag and last modification timestamp.\n* Consumers SHOULD include the entity tag in an `if-none-match` header field\n  ([RFC9110], Section 13.1.1). If no entity tag was provided, consumers SHOULD\n  include the stored timestamp in an `if-modified-since` header field\n  ([RFC9110], Section 13.1.3).\n* Upon receiving a `304 (Not Modified)` status code ([RFC9110], Section 15.4.5),\n  consumers MUST retain their existing parsed configuration and refresh the\n  freshness lifetime according to the accompanying headers.\n\n```",
+          "createdAt": "2026-10-22T12:20:36Z",
+          "updatedAt": "2026-10-22T12:20:36Z"
         }
       ]
     },
@@ -330,13 +337,23 @@
       "state": "OPEN",
       "author": "mnot",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "garyillyes"
+      ],
       "labels": [],
       "body": "Some sources publish geolocation per prefix as RFC 8805 geofeeds (iCloud Private Relay, Linode, DigitalOcean, Vultr), and others label prefixes with a cloud region (AWS, Oracle). JAFAR carries neither. If that\u2019s intentional, it\u2019d help to say so in the draft, and why.",
       "createdAt": "2026-10-15T03:16:33Z",
-      "updatedAt": "2026-10-15T03:16:33Z",
+      "updatedAt": "2026-10-22T12:28:21Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "garyillyes",
+          "authorAssociation": "OWNER",
+          "body": "I shall investigate this. I think it's a good idea to provide regions if available, not sure what would that look like; probably like AWS'? I'll visit my thinking armchair  ",
+          "createdAt": "2026-10-22T12:28:19Z",
+          "updatedAt": "2026-10-22T12:28:19Z"
+        }
+      ]
     },
     {
       "number": 13,
@@ -346,11 +363,13 @@
       "state": "OPEN",
       "author": "mnot",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "garyillyes"
+      ],
       "labels": [],
       "body": "Clients are now identified by up to three mechanisms: published IP ranges (JAFAR), reverse DNS, and Web Bot Auth signatures. Providers can use more than one at once, and the draft\u2019s own Example 2 notes that FCrDNS is \u201calso recommended\u201d, but only as free text.\n\nWhat should a verifier do when they disagree? For example:\n\nA request has a valid Web Bot Auth signature but comes from outside the advertised ranges.\nA request comes from inside the ranges but is unsigned, or the signature is invalid.\nA request has matching reverse DNS but is outside the ranges.\n\nEither the draft could define precedence and error handling, or JAFAR could let a provider say how its mechanisms combine (e.g., ranges are authoritative, or any one mechanism suffices).",
       "createdAt": "2026-10-15T03:19:52Z",
-      "updatedAt": "2026-10-15T03:19:52Z",
+      "updatedAt": "2026-10-22T12:02:24Z",
       "closedAt": null,
       "comments": []
     },
@@ -362,11 +381,13 @@
       "state": "OPEN",
       "author": "mnot",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "garyillyes"
+      ],
       "labels": [],
       "body": "Many providers also use reverse DNS to identify their bots: the client\u2019s IP must reverse-resolve to a hostname under a published domain, and forward-resolve back to the IP. In the roughly 120 bot definitions (run by about 34 providers) my tool curates, about half declare such domains, some alongside a range feed.\n\nShould JAFAR let a publisher declare these domains (e.g., a list of domain suffixes at the top level, or per prefix)? See also #13 on how the mechanisms should combine.",
       "createdAt": "2026-10-15T03:28:54Z",
-      "updatedAt": "2026-10-15T03:28:54Z",
+      "updatedAt": "2026-10-22T12:20:48Z",
       "closedAt": null,
       "comments": []
     }
